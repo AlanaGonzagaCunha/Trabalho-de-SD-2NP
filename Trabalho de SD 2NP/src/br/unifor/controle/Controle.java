@@ -18,7 +18,7 @@ public class Controle {
 	private static Configuracoes configuracoes;
 
 	public Controle() {
-		this.configuracoes = new Configuracoes("12345");
+		this.configuracoes = new Configuracoes("12345", "100", "2000");
 		Servidor servidor = new Servidor(this);
 		verificaRede();
 	}
@@ -49,7 +49,7 @@ public class Controle {
 		String ip = this.localizaRede();
 
 		for (int i = 0; i <= 255; i++) {
-			String verificaIPs = ip+String.valueOf(i);
+			String verificaIPs = ip + String.valueOf(i);
 
 			if (this.configuracoes.getIp().equals(verificaIPs)) {
 				System.out.println("Já existe conexao aberta no ip: " + verificaIPs);
@@ -59,8 +59,9 @@ public class Controle {
 					System.out.println("Já existe conexao aberta no ip: " + verificaIPs);
 
 				} else {
-					System.out.println("Meu ip: "+verificaIPs);
-					RecebeConexaoCliente con = new RecebeConexaoCliente(verificaIPs, Integer.parseInt(configuracoes.getPorta()), this);
+					System.out.println("Meu ip: " + verificaIPs);
+					RecebeConexaoCliente con = new RecebeConexaoCliente(verificaIPs,
+							Integer.parseInt(configuracoes.getPorta()), this);
 
 					Thread conectarServidor = new Thread(con);
 					conectarServidor.start();
