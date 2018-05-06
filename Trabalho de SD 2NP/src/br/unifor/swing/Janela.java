@@ -53,21 +53,18 @@ public class Janela extends JFrame {
 	private JTextField sistExibeBloqueio;
 	private JLabel local;
 	private JLabel localCPU;
-	private JLabel localMemoria;	
+	private JLabel localMemoria;
 	private JLabel localBloqueio;
 	private JTextField localExibeCPU;
 	private JTextField localExibeMemoria;
 	private JTextField localExibeBloqueio;
 	private JTable tabela;
-	
-	String[][] dados = new String[][]{
-	    {"Rodrigo","28","Masculino"},
-	    {"Maria","30","Feminino"},
-		   };
-	private String [] nomeColuna =  new String []{"", ""};
+
+	String[][] dados = new String[][] { { "Rodrigo", "28", "Masculino" }, { "Maria", "30", "Feminino" }, };
+	private String[] nomeColuna = new String[] { "", "" };
 
 	public static void main(String[] args) {
-		//controle = new Controle();
+		// controle = new Controle();
 		Janela janela = new Janela();
 	}
 
@@ -80,9 +77,9 @@ public class Janela extends JFrame {
 		btnEnviar = new JButton("Enviar");
 		btnOK = new JButton("OK");
 		painelLog = new JPanel();
-		local= new JLabel("Local: ");
+		local = new JLabel("Local: ");
 		localCPU = new JLabel("CPU: ");
-		localMemoria= new JLabel("Memória: ");
+		localMemoria = new JLabel("Memória: ");
 		localBloqueio = new JLabel("Bloqueio: ");
 		localExibeCPU = new JTextField();
 		localExibeMemoria = new JTextField();
@@ -96,10 +93,9 @@ public class Janela extends JFrame {
 		sistExibeBloqueio = new JTextField();
 		scrollTxt = new JScrollPane(txtArea);
 		tabela = new JTable();
-		DefaultTableModel model = new DefaultTableModel(dados , nomeColuna);
+		DefaultTableModel model = new DefaultTableModel(dados, nomeColuna);
 		tabela.setModel(model);
-			
-		
+
 		setTitle("Trabalho de SD");
 		setVisible(true);
 		setSize(600, 470);
@@ -116,13 +112,13 @@ public class Janela extends JFrame {
 		localMemoria.setSize(150, 150);
 		localBloqueio.setLocation(25, 340);
 		localBloqueio.setSize(150, 150);
-		localExibeCPU.setLocation(100,345);
-		localExibeCPU.setSize(50,20);
-		localExibeMemoria.setLocation(100,375);
-		localExibeMemoria.setSize(50,20);
-		localExibeBloqueio.setLocation(100,405);
-		localExibeBloqueio.setSize(50,20);
-		
+		localExibeCPU.setLocation(100, 345);
+		localExibeCPU.setSize(50, 20);
+		localExibeMemoria.setLocation(100, 375);
+		localExibeMemoria.setSize(50, 20);
+		localExibeBloqueio.setLocation(100, 405);
+		localExibeBloqueio.setSize(50, 20);
+
 		sistema.setLocation(250, 250);
 		sistema.setSize(150, 150);
 		sistemaCPU.setLocation(250, 280);
@@ -131,32 +127,29 @@ public class Janela extends JFrame {
 		sistemaMemoria.setSize(150, 150);
 		sistemaBloqueio.setLocation(250, 340);
 		sistemaBloqueio.setSize(150, 150);
-		sistExibeCPU.setSize(50,20);
-		sistExibeCPU.setLocation(320,345);
-		sistExibeMemoria.setLocation(320,375);
-		sistExibeMemoria.setSize(50,20);
-		sistExibeBloqueio.setLocation(320,405);
-		sistExibeBloqueio.setSize(50,20);
+		sistExibeCPU.setSize(50, 20);
+		sistExibeCPU.setLocation(320, 345);
+		sistExibeMemoria.setLocation(320, 375);
+		sistExibeMemoria.setSize(50, 20);
+		sistExibeBloqueio.setLocation(320, 405);
+		sistExibeBloqueio.setSize(50, 20);
 		sistExibeCPU.setEnabled(false);
 		sistExibeMemoria.setEnabled(false);
 		sistExibeBloqueio.setEnabled(false);
-		
-		
+
 		btnEnviar.setSize(100, 110);
 		btnEnviar.setLocation(450, 325);
 		btnOK.setSize(60, 30);
 		btnOK.setLocation(170, 370);
-		
 
 		tabela.setLocation(330, 30);
-		tabela.setSize(250,200);
-		
+		tabela.setSize(250, 100);
+
 		scrollTxt.setBounds(10, 30, 300, 250);
 		scrollTxt.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollTxt.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		repaint();
-		
-		
+
 		add(local);
 		add(localCPU);
 		add(localMemoria);
@@ -165,7 +158,7 @@ public class Janela extends JFrame {
 		add(localExibeMemoria);
 		add(localExibeBloqueio);
 		add(btnEnviar);
-		add(btnOK);
+		// add(btnOK);
 		add(sistema);
 		add(sistemaCPU);
 		add(sistemaMemoria);
@@ -174,71 +167,41 @@ public class Janela extends JFrame {
 		add(sistExibeMemoria);
 		add(sistExibeBloqueio);
 		add(tabela);
-	
-		
+
 		getContentPane().add(scrollTxt);
 		repaint();
-		//tratarEventos();
+		tratarEventos();
 
 	}
 
-	private void tratarEventos() {
-		
-		btnOK.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-
-				if (!txtArea.getText().isEmpty() && !txtArea.isFocusOwner()) {
-					String mensagem = txtArea.getText();
-					
-					//controle.enviaMessagem(mensagem + " ");				
-					txtArea.setText("");
-
-				}
-			}
-		});
-		
-		txtArea.addKeyListener(new KeyListener() {
-
-			@Override
-			public void keyTyped(KeyEvent e) {
-
-			}
-
-			@Override
-			public void keyReleased(KeyEvent e) {
-				if (e.getKeyChar() == KeyEvent.VK_ENTER) {
-
-					if (!txtArea.getText().isEmpty()) {
-						String mensagem = txtArea.getText();
-						System.out.println("Enviando mensagem: " + mensagem);
-						controle.enviaMessagem(mensagem);
-						exibeMgs.append(mensagem + "\n");
-						txtArea.setText("");
-
-					}
-				}
-			}
-
-			@Override
-			public void keyPressed(KeyEvent e) {
-
-			}
-		});
+	public void tratarEventos() {
 
 		btnEnviar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 
-				if (!txtArea.getText().isEmpty() && !txtArea.isFocusOwner()) {
-					String mensagem = txtArea.getText();
-					System.out.println("Enviando mensagem: " + mensagem);
-					controle.enviaMessagem(mensagem + " ");
-					exibeMgs.append(mensagem);
-					txtArea.setText("");
+				if (!localExibeCPU.getText().isEmpty() && !localExibeCPU.isFocusOwner()
+						&& !localExibeMemoria.getText().isEmpty() && !localExibeMemoria.isFocusOwner()
+						&& !localExibeBloqueio.getText().isEmpty() && !localExibeBloqueio.isFocusOwner()) {
+
+					String cpuLocal = localExibeCPU.getText();
+					String memoriaLocal = localExibeMemoria.getText();
+					String bloqueioLocal = localExibeBloqueio.getText();
+
+					// controle.enviaMessagem(mensagem + " ");
+
+					localExibeCPU.setText("");
+					localExibeMemoria.setText("");
+					localExibeBloqueio.setText("");
 
 				}
 			}
 		});
+
 	}
+
+	public void prencheLog() {
+
+	}
+
 }
