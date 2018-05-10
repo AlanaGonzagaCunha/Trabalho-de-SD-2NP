@@ -5,17 +5,19 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import br.unifor.Messagens.Conexao;
 import br.unifor.cliente.*;
 import br.unifor.cliente.RecebeConexaoCliente;
 import br.unifor.configurações.Configuracoes;
+import br.unifor.servidor.RecebeConexaoServidor;
 import br.unifor.servidor.Servidor;
 
 public class Controle {
 	private Cliente cliente;
 	private Servidor servidor;
 
-	private static ArrayList<Socket> conexoes = new ArrayList<Socket>();
 	private static Configuracoes configuracoes;
+	private static ArrayList<Conexao> conexoes = new ArrayList<Conexao>();
 
 	public Controle() {
 		this.configuracoes = new Configuracoes("12345", "100", "2000");
@@ -23,29 +25,54 @@ public class Controle {
 		verificaRede();
 	}
 
+	public void conectaServidor(String ip) {
+		RecebeConexaoCliente agente = new RecebeConexaoCliente(ip, 12345, this);
+
+		Thread agenteConectarComServidor = new Thread(agente);
+		agenteConectarComServidor.start();
+	}
+
+	public void recebeConexao(Socket socket) {
+
+		String ipNovaConexao = socket.getInetAddress().getHostAddress();
+
+		System.out.println("Conexão " + ipNovaConexao + " adicionada a lista.");
+
+		Conexao conexaoJaExistente = this.isConexao(ipNovaConexao);
+
+		if (conexaoJaExistente != null) {
+
+			this.conexoes.remove(conexaoJaExistente);
+		}
+
+		Conexao novaConexao = new Conexao(socket, this);
+
+		this.conexoes.add(novaConexao);
+
+	}
+
 	public String getPortaServidor() {
 
 		return this.configuracoes.getPorta();
 	}
 
-	public void adicionaConexao(Socket con) {
-		System.out.println("Nova conexão foi adionada: " + con.getInetAddress().getHostAddress());
-		this.conexoes.add(con);
-	}
+	public Conexao isConexao(String ip) {
 
-	public String isConexao(String ip) {
+		for (Conexao conexao : this.conexoes) {
 
-		for (Socket s : conexoes) {
-			if (s.getInetAddress().getHostAddress().equals(ip)) {
-				return s.getInetAddress().getHostAddress();
+			String ipConexao = conexao.getConexao().getInetAddress().getHostAddress();
+
+			if (ip.equals(ipConexao)) {
+
+				return conexao;
 			}
 		}
-		return "";
+
+		return null;
 	}
 
 	public void verificaRede() {
 
-		System.out.println("Verificar se há conexões abertas na rede... ");
 		String ip = this.localizaRede();
 
 		for (int i = 0; i <= 255; i++) {
@@ -55,22 +82,18 @@ public class Controle {
 				System.out.println("Já existe conexao aberta no ip: " + verificaIPs);
 
 			} else {
-				if (this.isConexao(verificaIPs).equals(verificaIPs)) {
-					System.out.println("Já existe conexao aberta no ip: " + verificaIPs);
-
-				} else {
-					System.out.println("Meu ip: " + verificaIPs);
-					RecebeConexaoCliente con = new RecebeConexaoCliente(verificaIPs,
-							Integer.parseInt(configuracoes.getPorta()), this);
-
-					Thread conectarServidor = new Thread(con);
-					conectarServidor.start();
+				
+				Conexao conexao = this.isConexao(verificaIPs);
+				
+				if( conexao == null) {
+					System.out.println("Meu ip: "+verificaIPs);
+					
+					this.conectaServidor(verificaIPs);
+				}
+				
 				}
 			}
-		}
-
-		System.out.println("Fim de verificação... ");
-
+		
 	}
 
 	public String localizaRede() {
@@ -83,29 +106,49 @@ public class Controle {
 		return vetorIP[0] + "." + vetorIP[1] + "." + vetorIP[2] + ".";
 	}
 
-	public void enviaMessagem(String mgs) {
-		System.out.println("Total de servidores conectados: " + this.conexoes.size());
-
-		for (Socket c : conexoes) {
-			try {
-				System.out.println("Enviando messgens, para " + c.getInetAddress().getHostAddress());
-				PrintStream ps = new PrintStream(c.getOutputStream());
-
-				ps.println(mgs);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
-		}
-
-	}
-
-	public ArrayList<Socket> getConexoes() {
+	public ArrayList<Conexao> getConexoes() {
 		return conexoes;
 	}
 
-	public void setConexoes(ArrayList<Socket> conexoes) {
+	public void setConexoes(ArrayList<Conexao> conexoes) {
 		this.conexoes = conexoes;
 	}
+
+	
+
+	// public void adicionaConexao(Socket con) {
+	// System.out.println("Nova conexão foi adionada: " +
+	// con.getInetAddress().getHostAddress());
+	// this.conexoes.add(con);
+	// }
+
+	// public String isConexao(String ip) {
+	//
+	// for (Socket s : conexoes) {
+	// if (s.getInetAddress().getHostAddress().equals(ip)) {
+	// return s.getInetAddress().getHostAddress();
+	// }
+	// }
+	// return "";
+	// }
+
+	// public void enviaMessagem(String mgs) {
+	// System.out.println("Total de servidores conectados: " +
+	// this.conexoes.size());
+	//
+	// for (Conexao c : conexoes) {
+	// try {
+	// System.out.println("Enviando messgens, para " +
+	// c.getInetAddress().getHostAddress());
+	// PrintStream ps = new PrintStream(c.getOutputStream());
+	//
+	// ps.println(mgs);
+	// } catch (IOException e) {
+	// e.printStackTrace();
+	// }
+	//
+	// }
+	//
+	// }
 
 }

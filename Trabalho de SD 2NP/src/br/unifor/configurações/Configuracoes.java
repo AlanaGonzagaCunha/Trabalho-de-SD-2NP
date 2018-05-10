@@ -7,7 +7,6 @@ public class Configuracoes {
 	private String porta;
 	private String ip;
 	private String cpu, memoria;
-	private boolean ativa;
 
 	public Configuracoes(String porta, String cpu, String memoria) {
 		this.porta = porta;
@@ -15,7 +14,14 @@ public class Configuracoes {
 		this.cpu= cpu;
 		descobrirIpv4daRede();
 	}
+	
+	public Configuracoes(String memoria, String cpu) {
 
+		this.cpu = cpu;
+		this.memoria = memoria;
+		this.porta = porta;
+		
+	}
 	public void descobrirIpv4daRede() {
 		InetAddress iAddress;
 		try {
@@ -61,12 +67,6 @@ public class Configuracoes {
 		this.memoria = memoria;
 	}
 
-	public boolean isAtiva() {
-		return ativa;
-	}
-
-	public void setAtiva(boolean ativa) {
-		this.ativa = ativa;
-	}
+	
 
 }

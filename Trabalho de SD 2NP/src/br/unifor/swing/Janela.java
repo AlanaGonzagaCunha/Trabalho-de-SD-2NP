@@ -37,7 +37,6 @@ public class Janela extends JFrame {
 
 	private JFrame janela;
 	private JButton btnEnviar;
-	private JButton btnOK;
 	private JPanel painelLog;
 	private JTextArea txtArea;
 	private JScrollPane scrollTxt;
@@ -75,7 +74,6 @@ public class Janela extends JFrame {
 	public void montaJanela() {
 		janela = new JFrame();
 		btnEnviar = new JButton("Enviar");
-		btnOK = new JButton("OK");
 		painelLog = new JPanel();
 		local = new JLabel("Local: ");
 		localCPU = new JLabel("CPU: ");
@@ -139,8 +137,6 @@ public class Janela extends JFrame {
 
 		btnEnviar.setSize(100, 110);
 		btnEnviar.setLocation(450, 325);
-		btnOK.setSize(60, 30);
-		btnOK.setLocation(170, 370);
 
 		tabela.setLocation(330, 30);
 		tabela.setSize(250, 100);
@@ -158,7 +154,6 @@ public class Janela extends JFrame {
 		add(localExibeMemoria);
 		add(localExibeBloqueio);
 		add(btnEnviar);
-		// add(btnOK);
 		add(sistema);
 		add(sistemaCPU);
 		add(sistemaMemoria);

@@ -24,11 +24,11 @@ public class RecebeConexaoCliente implements Runnable {
 		try {
 			Socket abreConexao = new Socket(this.ip, this.porta);
 			System.out.println("Cliene conectado no servidor!!!");
-			this.controle.adicionaConexao(abreConexao);
+			this.controle.recebeConexao(abreConexao);
 
 		} catch (IOException e) {
 			System.out
-					.println("Não há servidor conectado neste ip: " + ip + " com a porta:" + String.valueOf(porta));
+					.println("Não há servidor conectado neste ip: " + ip);
 		}
 
 	}

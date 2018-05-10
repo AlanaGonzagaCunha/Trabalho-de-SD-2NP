@@ -24,7 +24,7 @@ public class Servidor {
 	}
 
 	public void recebeConexao(Socket cliente) {
-		this.getControl().adicionaConexao(cliente);
+		this.getControl().recebeConexao(cliente);
 	}
 
 	public void iniciaServicos(String porta) {

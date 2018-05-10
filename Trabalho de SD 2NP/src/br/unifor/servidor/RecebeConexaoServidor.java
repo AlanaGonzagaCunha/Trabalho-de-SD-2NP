@@ -19,7 +19,6 @@ public class RecebeConexaoServidor implements Runnable {
 		this.server= servidor;
 	
 	}
-
 	@Override
 	public void run() {
 		Socket cliente;
