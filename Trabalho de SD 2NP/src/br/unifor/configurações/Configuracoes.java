@@ -6,7 +6,7 @@ import java.net.UnknownHostException;
 public class Configuracoes {
 	private String porta;
 	private String ip;
-	private String cpu, memoria;
+	private String cpu, memoria, bloqueio;
 
 	public Configuracoes(String porta, String cpu, String memoria) {
 		this.porta = porta;
@@ -41,6 +41,14 @@ public class Configuracoes {
 
 	public void setPorta(String porta) {
 		this.porta = porta;
+	}
+
+	public String getBloqueio() {
+		return bloqueio;
+	}
+
+	public void setBloqueio(String bloqueio) {
+		this.bloqueio = bloqueio;
 	}
 
 	public String getIp() {

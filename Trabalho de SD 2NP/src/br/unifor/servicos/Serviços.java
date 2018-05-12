@@ -4,6 +4,7 @@ import br.unifor.controle.Controle;
 
 public class Serviços {
 	private Controle controle;
+	private String SEPARADOR="cpu|memo|bloq>";
 
 	public Serviços(Controle controle) {
 		this.controle = controle;

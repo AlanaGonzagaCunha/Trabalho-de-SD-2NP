@@ -15,9 +15,18 @@ import br.unifor.servidor.Servidor;
 public class Controle {
 	private Cliente cliente;
 	private Servidor servidor;
+	private String SEPARADOR = "";
 
 	private static Configuracoes configuracoes;
 	private static ArrayList<Conexao> conexoes = new ArrayList<Conexao>();
+
+	public String getSEPARADOR() {
+		return SEPARADOR;
+	}
+
+	public void setSEPARADOR(String SEPARADOR) {
+		SEPARADOR = SEPARADOR;
+	}
 
 	public Controle() {
 		this.configuracoes = new Configuracoes("12345", "100", "2000");
@@ -82,18 +91,18 @@ public class Controle {
 				System.out.println("Já existe conexao aberta no ip: " + verificaIPs);
 
 			} else {
-				
+
 				Conexao conexao = this.isConexao(verificaIPs);
-				
-				if( conexao == null) {
-					System.out.println("Meu ip: "+verificaIPs);
-					
+
+				if (conexao == null) {
+					System.out.println("Meu ip: " + verificaIPs);
+
 					this.conectaServidor(verificaIPs);
 				}
-				
-				}
+
 			}
-		
+		}
+
 	}
 
 	public String localizaRede() {
@@ -114,6 +123,42 @@ public class Controle {
 		this.conexoes = conexoes;
 	}
 
+	public boolean verficaConexao() {
+
+		if (this.conexoes.size() > 1) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public void enviaValores(String cpu, String memoria, String bloqueio) {
+		
+		SEPARADOR=cpu+"|"+memoria+"|"+bloqueio+">";
+		
+		int cpuConexao = 0, memoriaConexao = 0, bloqueioConexao = 0;
+
+		for (Conexao c : this.conexoes) {
+			cpuConexao = Integer.parseInt(c.getConfiguracoes().getCpu());
+			memoriaConexao = Integer.parseInt(c.getConfiguracoes().getMemoria());
+			bloqueioConexao = Integer.parseInt(c.getConfiguracoes().getBloqueio());
+
+			cpuConexao += Integer.parseInt(cpu);
+			memoriaConexao += Integer.parseInt(memoria);
+			bloqueioConexao += Integer.parseInt(bloqueio);
+
+		}
+
+		configuracoes.setCpu("" + cpuConexao);
+		configuracoes.setMemoria("" + memoriaConexao);
+		configuracoes.setBloqueio("" + bloqueioConexao);
+		
+		//preciso chamar o metodo enviarMessagem(SEPADARADOR) 
+		//da conexao para enviar para todos os clientes
+
+	}
+
+	
 	
 
 	// public void adicionaConexao(Socket con) {
@@ -130,25 +175,6 @@ public class Controle {
 	// }
 	// }
 	// return "";
-	// }
-
-	// public void enviaMessagem(String mgs) {
-	// System.out.println("Total de servidores conectados: " +
-	// this.conexoes.size());
-	//
-	// for (Conexao c : conexoes) {
-	// try {
-	// System.out.println("Enviando messgens, para " +
-	// c.getInetAddress().getHostAddress());
-	// PrintStream ps = new PrintStream(c.getOutputStream());
-	//
-	// ps.println(mgs);
-	// } catch (IOException e) {
-	// e.printStackTrace();
-	// }
-	//
-	// }
-	//
 	// }
 
 }

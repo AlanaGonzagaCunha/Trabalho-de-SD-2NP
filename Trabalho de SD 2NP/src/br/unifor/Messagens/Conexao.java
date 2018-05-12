@@ -31,28 +31,37 @@ public class Conexao {
 	public void enviaMensagem(String mensagem) {
 
 		try {
-			
+
 			System.out.println("Enviando mensagem para " + this.getConexao().getInetAddress().getHostAddress());
 			PrintStream saida;
 			saida = new PrintStream(this.getConexao().getOutputStream());
 			saida.println(mensagem);
-		
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-
 	}
 
 	public void recebeMensagem(String mensagem) {
-		String ip= getIP();
-	//	this.recebeMensagem(ip, mensagem);
+		System.out.println("Usa o separador para pegar as variáveis... ");
+		String[] vetorSeparador = mensagem.split("|");
+
+		String cpu = vetorSeparador[0];
+		String memoria = vetorSeparador[2];
+		String bloqueio = vetorSeparador[4];
+
+		System.out.println("CPU: " + cpu);
+		System.out.println("MEMORIA: " + memoria);
+		System.out.println("BLOQUEIO:" + bloqueio);
+
 	}
-	
+
 	public String getIP() {
 		return this.conexao.getInetAddress().getHostAddress();
 	}
+
 	public Controle getControle() {
 		return controle;
 	}

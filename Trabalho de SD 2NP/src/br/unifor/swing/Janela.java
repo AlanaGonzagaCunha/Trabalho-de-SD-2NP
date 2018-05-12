@@ -31,6 +31,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import br.unifor.configurações.Configuracoes;
 import br.unifor.controle.Controle;
 
 public class Janela extends JFrame {
@@ -42,7 +43,6 @@ public class Janela extends JFrame {
 	private JScrollPane scrollTxt;
 	private JScrollPane scrollTabela;
 	private JTextArea exibeMgs;
-	private static Controle controle;
 	private JLabel sistema;
 	private JLabel sistemaCPU;
 	private JLabel sistemaMemoria;
@@ -58,12 +58,22 @@ public class Janela extends JFrame {
 	private JTextField localExibeMemoria;
 	private JTextField localExibeBloqueio;
 	private JTable tabela;
+	private static Controle controle;
 
 	String[][] dados = new String[][] { { "Rodrigo", "28", "Masculino" }, { "Maria", "30", "Feminino" }, };
 	private String[] nomeColuna = new String[] { "", "" };
 
+	private Configuracoes configuracoes;
+
+	/*
+	 * 1- Qdo tenho mais de dois cliente conectado preciso enviar minha informações para outros
+	clientes atualizarem o sistema e realizar o somatorio. --> envio separador
+	 * 2- Preciso receber para atualizar meu sistema e GUI. --> recebe sepador/quebra/realiza soma 
+	*/
+	
+	
 	public static void main(String[] args) {
-		// controle = new Controle();
+		 controle = new Controle();
 		Janela janela = new Janela();
 	}
 
@@ -92,7 +102,7 @@ public class Janela extends JFrame {
 		scrollTxt = new JScrollPane(txtArea);
 		tabela = new JTable();
 		DefaultTableModel model = new DefaultTableModel(dados, nomeColuna);
-		tabela.setModel(model);
+		// tabela.setModel(model);
 
 		setTitle("Trabalho de SD");
 		setVisible(true);
@@ -161,7 +171,7 @@ public class Janela extends JFrame {
 		add(sistExibeCPU);
 		add(sistExibeMemoria);
 		add(sistExibeBloqueio);
-		add(tabela);
+		//add(tabela);
 
 		getContentPane().add(scrollTxt);
 		repaint();
@@ -183,7 +193,7 @@ public class Janela extends JFrame {
 					String memoriaLocal = localExibeMemoria.getText();
 					String bloqueioLocal = localExibeBloqueio.getText();
 
-					// controle.enviaMessagem(mensagem + " ");
+					atualizaDadosGUI(cpuLocal, memoriaLocal, bloqueioLocal);
 
 					localExibeCPU.setText("");
 					localExibeMemoria.setText("");
@@ -191,12 +201,43 @@ public class Janela extends JFrame {
 
 				}
 			}
+
+			private void atualizaDadosGUI(String cpuLocal, String memoriaLocal, String bloqueioLocal) {
+
+	
+				if (controle.verficaConexao()) {
+					//se houver mais que uma conexão envia/receber SEPARADOR, realiza o somatorio
+					
+					 
+					somatorio(cpuLocal, memoriaLocal, bloqueioLocal);
+					
+					sistExibeCPU.setText(configuracoes.getCpu());
+					sistExibeMemoria.setText(configuracoes.getMemoria());
+					sistExibeBloqueio.setText(configuracoes.getBloqueio());
+					repaint();
+
+				} else {
+					//se houver apenas uma conexao atualiza a tela
+					sistExibeCPU.setText(cpuLocal);
+					sistExibeMemoria.setText(memoriaLocal);
+					sistExibeBloqueio.setText(bloqueioLocal);
+					repaint();
+				}
+
+			}
+
+			private void somatorio(String cpuLocal, String memoriaLocal, String bloqueioLocal) {
+				System.out.println("Realiza o somatorio das variáveis! ");
+				
+				controle.enviaValores(cpuLocal, memoriaLocal, bloqueioLocal);
+			}
 		});
 
 	}
 
-	public void prencheLog() {
+	public void prencheLog(String mgs) {
 
+		exibeMgs.append(mgs + "\n");
 	}
 
 }
