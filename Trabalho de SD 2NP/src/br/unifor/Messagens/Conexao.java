@@ -52,9 +52,9 @@ public class Conexao {
 			controle.getConfiguracoesControle().setMemoria(memoria);
 			controle.getConfiguracoesControle().setBloqueio(bloqueio);
 			System.out.println("Valores recebidos de: "
-					+ " Cpu: " + cpu
-					+ " Memoria: " + memoria
-					+ " Bloqueio: "+ bloqueio);
+					+ " ,Cpu: " + cpu
+					+ " ,Memoria: " + memoria
+					+ " ,Bloqueio: "+ bloqueio);
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
