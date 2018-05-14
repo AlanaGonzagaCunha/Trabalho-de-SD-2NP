@@ -14,7 +14,7 @@ import br.unifor.controle.Controle;
 
 public class Servidor {
 
-	 ServerSocket servidor;
+	ServerSocket servidor;
 	public static Controle control;
 	private static Thread thread;
 
@@ -29,7 +29,7 @@ public class Servidor {
 
 	public void iniciaServicos(String porta) {
 		try {
-			System.out.println(porta);
+			System.out.println("Porta: "+porta);
 			this.servidor = new ServerSocket(Integer.parseInt(porta));
 
 			RecebeConexaoServidor recebeConexao = new RecebeConexaoServidor(this);

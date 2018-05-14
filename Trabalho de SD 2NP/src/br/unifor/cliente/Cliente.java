@@ -6,6 +6,7 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 import br.unifor.Messagens.Conexao;
 import br.unifor.controle.Controle;
@@ -22,15 +23,18 @@ public class Cliente {
 	public void somatorio(String a) {
 		
 		System.out.println("Usa o separador para pegar as variáveis... ");
-		String[] vetorSeparador = a.split("|");
-
+		String[] vetorSeparador = a.split("\\|");	
+		
 		String cpu = vetorSeparador[0];
-		String memoria = vetorSeparador[2];
-		String bloqueio = vetorSeparador[4];
-
-		System.out.println("CPU: " + cpu);
-		System.out.println("MEMORIA: " + memoria);
-		System.out.println("BLOQUEIO:" + bloqueio);
+		String memoria = vetorSeparador[1];
+		String b = vetorSeparador[2];
+		
+		String v [] = b.split("\\>");
+		String bloqueio = v[0];
+		
+		System.out.println("CPU Local: " + cpu);
+		System.out.println("MEMORIA Local: " + memoria);
+		System.out.println("BLOQUEIO Local:" + bloqueio);
 
 		int cpuConexao = 0, memoriaConexao = 0, bloqueioConexao = 0;
 
@@ -42,6 +46,11 @@ public class Cliente {
 			cpuConexao += Integer.parseInt(cpu);
 			memoriaConexao += Integer.parseInt(memoria);
 			bloqueioConexao += Integer.parseInt(bloqueio);
+			
+			System.out.println("\n Valores somados... ");
+			System.out.println("\n CPU SISTEMA: "+ cpuConexao);
+			System.out.println("\n MEMORIA: SISTEMA: "+ memoriaConexao);
+			System.out.println("\n BLOQUEIO SISTEMA: " + bloqueioConexao);
 
 		}
 		controle.getConfiguracoesControle().setCpu(""+cpuConexao);
@@ -63,10 +72,5 @@ public class Cliente {
 	}
 
 	
-
-	public void enviaConfiguracoesCliente(String configuracoesMaquina) {
-
-		
-	}
 
 }

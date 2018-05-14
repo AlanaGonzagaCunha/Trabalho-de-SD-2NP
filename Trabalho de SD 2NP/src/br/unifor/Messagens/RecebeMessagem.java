@@ -18,14 +18,13 @@ public class RecebeMessagem implements Runnable {
 	@Override
 	public void run() {
 
-			Socket cliente;
-			
+		
 			try {
 				
 				Scanner entrada = new Scanner(conexao.getConexao().getInputStream());
 				
 				while(entrada.hasNextLine()) {
-					this.conexao.quebraSeparador(entrada.nextLine() );
+					this.conexao.enviaMensagem(entrada.nextLine() );
 				}
 				
 			} catch (IOException e) {

@@ -59,9 +59,9 @@ public class Janela extends JFrame {
 	private JTextField localExibeBloqueio;
 	private JTable tabela;
 	private static Controle controle;
-	private String SEPARADOR;
+	private String SEPARADOR="";
 
-	private Configuracoes configuracoes;
+	//private Configuracoes configuracoes;
 
 	/*
 	 * 1- Qdo tenho mais de dois cliente conectado preciso enviar minha informações para outros
@@ -193,27 +193,27 @@ public class Janela extends JFrame {
 
 					System.out.println("Separador: "+ SEPARADOR);
 					
-					
 					if(controle.verficaConexao()) {
 						//há várias conexões
-						
+						System.out.println("VÁRIAS conexões");
+					
 						//1º enviar valores --> ok!
 						controle.enviaMensagemControle(SEPARADOR);
 						//2º realizar o somatorio -->
 						controle.enviaSomatorio(SEPARADOR);
 						//3º atualiza interface --> 
-						sistExibeCPU.setText(configuracoes.getCpu());
-						sistExibeMemoria.setText(configuracoes.getMemoria());
-						sistExibeBloqueio.setText(configuracoes.getBloqueio());
+						sistExibeCPU.setText(controle.getConfiguracoesControle().getCpu());
+						sistExibeMemoria.setText(controle.getConfiguracoesControle().getMemoria());
+						sistExibeBloqueio.setText(controle.getConfiguracoesControle().getBloqueio());
 						repaint();
 						
 					}else {
 						//primeira conexao
 						System.out.println("ÚNICA conexão!");
-//						configuracoes.setCpu(cpuLocal);
-//						configuracoes.setMemoria(memoriaLocal);
-//						configuracoes.setBloqueio(bloqueioLocal);
-//											
+						controle.getConfiguracoesControle().setCpu(cpuLocal);
+						controle.getConfiguracoesControle().setMemoria(memoriaLocal);
+						controle.getConfiguracoesControle().setBloqueio(bloqueioLocal);
+											
 						sistExibeCPU.setText(cpuLocal);
 						sistExibeMemoria.setText(memoriaLocal);
 						sistExibeBloqueio.setText(bloqueioLocal);

@@ -7,15 +7,14 @@ import java.util.ArrayList;
 
 import br.unifor.Messagens.Conexao;
 import br.unifor.cliente.*;
-import br.unifor.cliente.RecebeConexaoCliente;
 import br.unifor.configurações.Configuracoes;
 import br.unifor.servidor.RecebeConexaoServidor;
 import br.unifor.servidor.Servidor;
 
 public class Controle {
-	private Cliente cliente;
-	private Servidor servidor;
+	
 	private String SEPARADOR = "";
+	Cliente cliente;
 
 	private static Configuracoes configuracoes;
 	private static ArrayList<Conexao> conexoes = new ArrayList<Conexao>();
@@ -29,8 +28,9 @@ public class Controle {
 	}
 
 	public Controle() {
-		this.configuracoes = new Configuracoes("12345", "100", "2000");
+		this.configuracoes = new Configuracoes("12345", "100", "2000", "100");
 		Servidor servidor = new Servidor(this);
+		Cliente cliente = new Cliente(this);
 		verificaRede();
 	}
 
@@ -50,7 +50,7 @@ public class Controle {
 		Conexao conexaoJaExistente = this.isConexao(ipNovaConexao);
 
 		if (conexaoJaExistente != null) {
-
+			//ja existe conexao remove
 			this.conexoes.remove(conexaoJaExistente);
 		}
 

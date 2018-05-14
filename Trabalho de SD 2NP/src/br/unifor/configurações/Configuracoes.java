@@ -8,17 +8,19 @@ public class Configuracoes {
 	private String ip;
 	private String cpu, memoria, bloqueio;
 
-	public Configuracoes(String porta, String cpu, String memoria) {
+	public Configuracoes(String porta, String cpu, String memoria, String bloqueio) {
 		this.porta = porta;
-		this.memoria = memoria;
 		this.cpu = cpu;
+		this.memoria = memoria;
+		this.bloqueio= bloqueio;
 		descobrirIpv4daRede();
 	}
 
-	public Configuracoes(String memoria, String cpu) {
+	public Configuracoes(String memoria, String cpu, String bloqueio) {
 
 		this.cpu = cpu;
 		this.memoria = memoria;
+		this.bloqueio = bloqueio;
 		this.porta = porta;
 
 	}
@@ -76,9 +78,6 @@ public class Configuracoes {
 		this.memoria = memoria;
 	}
 
-	public String getConfiguracoesMaquina() {
-
-		return (this.getCpu()) + "-" + (this.getMemoria());
-	}
+	
 
 }

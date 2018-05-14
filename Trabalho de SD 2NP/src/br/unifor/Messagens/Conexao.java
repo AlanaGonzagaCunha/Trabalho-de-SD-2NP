@@ -12,12 +12,13 @@ public class Conexao {
 	private String nomeConexao;
 	private Thread recebeMensagens;
 	private Configuracoes configuracoes;
+	String mgsRecebida;
 
 	public Conexao(Socket conexao, Controle controle) {
 
 		this.conexao = conexao;
 		this.controle = controle;
-		this.configuracoes = new Configuracoes("0", "0");
+		this.configuracoes = new Configuracoes("0", "0", "0");
 
 		this.escutaMensagem();
 	}
@@ -35,7 +36,25 @@ public class Conexao {
 			System.out.println("Enviando mensagem para " + this.getConexao().getInetAddress().getHostAddress());
 			PrintStream saida;
 			saida = new PrintStream(this.getConexao().getOutputStream());
+			System.out.println("Messagem recebida: "+ mensagem);
 			saida.println(mensagem);
+			
+			String[] vetorSeparador = mensagem.split("\\|");	
+			
+			String cpu = vetorSeparador[0];
+			String memoria = vetorSeparador[1];
+			String b = vetorSeparador[2];
+			
+			String v [] = b.split("\\>");
+			String bloqueio = v[0];
+			
+			controle.getConfiguracoesControle().setCpu(cpu);
+			controle.getConfiguracoesControle().setMemoria(memoria);
+			controle.getConfiguracoesControle().setBloqueio(bloqueio);
+			System.out.println("Valores recebidos de: "
+					+ " Cpu: " + cpu
+					+ " Memoria: " + memoria
+					+ " Bloqueio: "+ bloqueio);
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -44,10 +63,6 @@ public class Conexao {
 
 	}
 
-	public void quebraSeparador(String mensagem) {
-		
-
-	}
 
 	public String getIP() {
 		return this.conexao.getInetAddress().getHostAddress();
