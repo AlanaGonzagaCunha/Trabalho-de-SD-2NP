@@ -25,7 +25,7 @@ public class RecebeMessagem implements Runnable {
 				Scanner entrada = new Scanner(conexao.getConexao().getInputStream());
 				
 				while(entrada.hasNextLine()) {
-					this.conexao.recebeMensagem(entrada.nextLine() );
+					this.conexao.quebraSeparador(entrada.nextLine() );
 				}
 				
 			} catch (IOException e) {

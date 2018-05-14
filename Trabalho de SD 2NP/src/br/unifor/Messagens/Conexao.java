@@ -19,7 +19,7 @@ public class Conexao {
 		this.controle = controle;
 		this.configuracoes = new Configuracoes("0", "0");
 
-		escutaMensagem();
+		this.escutaMensagem();
 	}
 
 	public void escutaMensagem() {
@@ -44,17 +44,8 @@ public class Conexao {
 
 	}
 
-	public void recebeMensagem(String mensagem) {
-		System.out.println("Usa o separador para pegar as variáveis... ");
-		String[] vetorSeparador = mensagem.split("|");
-
-		String cpu = vetorSeparador[0];
-		String memoria = vetorSeparador[2];
-		String bloqueio = vetorSeparador[4];
-
-		System.out.println("CPU: " + cpu);
-		System.out.println("MEMORIA: " + memoria);
-		System.out.println("BLOQUEIO:" + bloqueio);
+	public void quebraSeparador(String mensagem) {
+		
 
 	}
 

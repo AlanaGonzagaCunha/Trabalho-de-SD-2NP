@@ -10,18 +10,19 @@ public class Configuracoes {
 
 	public Configuracoes(String porta, String cpu, String memoria) {
 		this.porta = porta;
-		this.memoria= memoria;
-		this.cpu= cpu;
+		this.memoria = memoria;
+		this.cpu = cpu;
 		descobrirIpv4daRede();
 	}
-	
+
 	public Configuracoes(String memoria, String cpu) {
 
 		this.cpu = cpu;
 		this.memoria = memoria;
 		this.porta = porta;
-		
+
 	}
+
 	public void descobrirIpv4daRede() {
 		InetAddress iAddress;
 		try {
@@ -75,6 +76,9 @@ public class Configuracoes {
 		this.memoria = memoria;
 	}
 
-	
+	public String getConfiguracoesMaquina() {
+
+		return (this.getCpu()) + "-" + (this.getMemoria());
+	}
 
 }

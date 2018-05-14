@@ -59,9 +59,7 @@ public class Janela extends JFrame {
 	private JTextField localExibeBloqueio;
 	private JTable tabela;
 	private static Controle controle;
-
-	String[][] dados = new String[][] { { "Rodrigo", "28", "Masculino" }, { "Maria", "30", "Feminino" }, };
-	private String[] nomeColuna = new String[] { "", "" };
+	private String SEPARADOR;
 
 	private Configuracoes configuracoes;
 
@@ -101,8 +99,6 @@ public class Janela extends JFrame {
 		sistExibeBloqueio = new JTextField();
 		scrollTxt = new JScrollPane(txtArea);
 		tabela = new JTable();
-		DefaultTableModel model = new DefaultTableModel(dados, nomeColuna);
-		// tabela.setModel(model);
 
 		setTitle("Trabalho de SD");
 		setVisible(true);
@@ -171,7 +167,6 @@ public class Janela extends JFrame {
 		add(sistExibeCPU);
 		add(sistExibeMemoria);
 		add(sistExibeBloqueio);
-		//add(tabela);
 
 		getContentPane().add(scrollTxt);
 		repaint();
@@ -193,8 +188,38 @@ public class Janela extends JFrame {
 					String memoriaLocal = localExibeMemoria.getText();
 					String bloqueioLocal = localExibeBloqueio.getText();
 
-					atualizaDadosGUI(cpuLocal, memoriaLocal, bloqueioLocal);
+					
+					SEPARADOR=cpuLocal+"|"+memoriaLocal+"|"+bloqueioLocal+">";
 
+					System.out.println("Separador: "+ SEPARADOR);
+					
+					
+					if(controle.verficaConexao()) {
+						//há várias conexões
+						
+						//1º enviar valores --> ok!
+						controle.enviaMensagemControle(SEPARADOR);
+						//2º realizar o somatorio -->
+						controle.enviaSomatorio(SEPARADOR);
+						//3º atualiza interface --> 
+						sistExibeCPU.setText(configuracoes.getCpu());
+						sistExibeMemoria.setText(configuracoes.getMemoria());
+						sistExibeBloqueio.setText(configuracoes.getBloqueio());
+						repaint();
+						
+					}else {
+						//primeira conexao
+						System.out.println("ÚNICA conexão!");
+//						configuracoes.setCpu(cpuLocal);
+//						configuracoes.setMemoria(memoriaLocal);
+//						configuracoes.setBloqueio(bloqueioLocal);
+//											
+						sistExibeCPU.setText(cpuLocal);
+						sistExibeMemoria.setText(memoriaLocal);
+						sistExibeBloqueio.setText(bloqueioLocal);
+						repaint();
+					}
+									
 					localExibeCPU.setText("");
 					localExibeMemoria.setText("");
 					localExibeBloqueio.setText("");
@@ -202,42 +227,13 @@ public class Janela extends JFrame {
 				}
 			}
 
-			private void atualizaDadosGUI(String cpuLocal, String memoriaLocal, String bloqueioLocal) {
+		
 
-	
-				if (controle.verficaConexao()) {
-					//se houver mais que uma conexão envia/receber SEPARADOR, realiza o somatorio
-					
-					 
-					somatorio(cpuLocal, memoriaLocal, bloqueioLocal);
-					
-					sistExibeCPU.setText(configuracoes.getCpu());
-					sistExibeMemoria.setText(configuracoes.getMemoria());
-					sistExibeBloqueio.setText(configuracoes.getBloqueio());
-					repaint();
-
-				} else {
-					//se houver apenas uma conexao atualiza a tela
-					sistExibeCPU.setText(cpuLocal);
-					sistExibeMemoria.setText(memoriaLocal);
-					sistExibeBloqueio.setText(bloqueioLocal);
-					repaint();
-				}
-
-			}
-
-			private void somatorio(String cpuLocal, String memoriaLocal, String bloqueioLocal) {
-				System.out.println("Realiza o somatorio das variáveis! ");
-				
-				controle.enviaValores(cpuLocal, memoriaLocal, bloqueioLocal);
-			}
+						
 		});
 
 	}
 
-	public void prencheLog(String mgs) {
 
-		exibeMgs.append(mgs + "\n");
-	}
 
 }

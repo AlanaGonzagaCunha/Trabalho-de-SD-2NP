@@ -60,6 +60,8 @@ public class Controle {
 
 	}
 
+	
+
 	public String getPortaServidor() {
 
 		return this.configuracoes.getPorta();
@@ -132,49 +134,19 @@ public class Controle {
 		return false;
 	}
 
-	public void enviaValores(String cpu, String memoria, String bloqueio) {
-		
-		SEPARADOR=cpu+"|"+memoria+"|"+bloqueio+">";
-		
-		int cpuConexao = 0, memoriaConexao = 0, bloqueioConexao = 0;
+	
 
-		for (Conexao c : this.conexoes) {
-			cpuConexao = Integer.parseInt(c.getConfiguracoes().getCpu());
-			memoriaConexao = Integer.parseInt(c.getConfiguracoes().getMemoria());
-			bloqueioConexao = Integer.parseInt(c.getConfiguracoes().getBloqueio());
-
-			cpuConexao += Integer.parseInt(cpu);
-			memoriaConexao += Integer.parseInt(memoria);
-			bloqueioConexao += Integer.parseInt(bloqueio);
-
-		}
-
-		configuracoes.setCpu("" + cpuConexao);
-		configuracoes.setMemoria("" + memoriaConexao);
-		configuracoes.setBloqueio("" + bloqueioConexao);
-		
-		//preciso chamar o metodo enviarMessagem(SEPADARADOR) 
-		//da conexao para enviar para todos os clientes
-
+	public void enviaMensagemControle(String sep) {
+		this.cliente.enviaMessagem(sep);
 	}
 
+	public void enviaSomatorio(String a) {
+		this.cliente.somatorio(a);
+	}
 	
-	
+	public Configuracoes getConfiguracoesControle() {
+		return this.configuracoes;
+	}
 
-	// public void adicionaConexao(Socket con) {
-	// System.out.println("Nova conexão foi adionada: " +
-	// con.getInetAddress().getHostAddress());
-	// this.conexoes.add(con);
-	// }
-
-	// public String isConexao(String ip) {
-	//
-	// for (Socket s : conexoes) {
-	// if (s.getInetAddress().getHostAddress().equals(ip)) {
-	// return s.getInetAddress().getHostAddress();
-	// }
-	// }
-	// return "";
-	// }
 
 }
