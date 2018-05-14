@@ -48,13 +48,13 @@ public class Conexao {
 			String v [] = b.split("\\>");
 			String bloqueio = v[0];
 			
-			controle.getConfiguracoesControle().setCpu(cpu);
-			controle.getConfiguracoesControle().setMemoria(memoria);
-			controle.getConfiguracoesControle().setBloqueio(bloqueio);
+			configuracoes.setCpu(cpu);
+			configuracoes.setMemoria(memoria);
+			configuracoes.setBloqueio(bloqueio);
 			System.out.println("Valores recebidos de: "
-					+ " ,Cpu: " + cpu
-					+ " ,Memoria: " + memoria
-					+ " ,Bloqueio: "+ bloqueio);
+					+ " Cpu: " + configuracoes.getCpu()+","
+					+ " Memoria: " + configuracoes.getMemoria() +","
+					+ " Bloqueio: "+ configuracoes.getBloqueio());
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
