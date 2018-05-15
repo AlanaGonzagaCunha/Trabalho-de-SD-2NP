@@ -59,13 +59,11 @@ public class Cliente {
 
 		System.out.println("O cliente conectou ao servidor, envia separador para todos conectados: " + mgs);
 
-		int cont = 0;
-		
 		for (Conexao conexao : this.controle.getConexoes()) {
-			if (controle.getConexoes().size() == cont) {
-				conexao.enviaMensagem(mgs);
-				cont++;
-			}
+			
+				conexao.enviaMensagemConexao(mgs);
+			
+		
 
 		}
 	}

@@ -13,6 +13,8 @@ public class Conexao {
 	private Thread recebeMensagens;
 	private Configuracoes configuracoes;
 	String mgsRecebida;
+	
+	int somaCpu, somaMemoria, somaBloqueio;
 
 	public Conexao(Socket conexao, Controle controle, Configuracoes c) {
 
@@ -29,17 +31,17 @@ public class Conexao {
 		this.recebeMensagens.start();
 	}
 
-	public void enviaMensagem(String mensagem) {
+	public void enviaMensagemConexao(String mensagem) {
 
 		try {
 			System.out.println("\n Enviando mensagem para " + this.getConexao().getInetAddress().getHostAddress()+"\n");
+			
 			PrintStream saida;
 			saida = new PrintStream(this.getConexao().getOutputStream());
 			System.out.println("Messagem recebida: "+ mensagem +"\n");
-			saida.println(mensagem);
+			saida.println(mensagem);			
 			
 			String[] vetorSeparador = mensagem.split("\\|");	
-			
 			String cpu = vetorSeparador[0];
 			String memoria = vetorSeparador[1];
 			String b = vetorSeparador[2];
@@ -47,24 +49,27 @@ public class Conexao {
 			String v [] = b.split("\\>");
 			String bloqueio = v[0];
 			
-						
 			System.out.println("Valores recebidos de: "
 					+ "\n Cpu: " + cpu +","
 					+ " Memoria: " + memoria +","
-					+ " Bloqueio: "+ bloqueio );
+					+ " Bloqueio: "+ bloqueio +"\n");
 			
-			controle.getConfiguracoesControle().setCpu(cpu);
-			controle.getConfiguracoesControle().setMemoria(memoria);
-			controle.getConfiguracoesControle().setBloqueio(bloqueio);
-
+			somaCpu = (Integer.parseInt(controle.getConfiguracoesControle().getCpu())+ (Integer.parseInt(cpu)));
+			somaMemoria = (Integer.parseInt(controle.getConfiguracoesControle().getMemoria())+ (Integer.parseInt(memoria)));
+			somaBloqueio = (Integer.parseInt(controle.getConfiguracoesControle().getBloqueio())+ (Integer.parseInt(bloqueio)));
+						
+		System.out.println("Soma sistema:"
+				+ "\n Cpu Sistema: "+ somaCpu +", "
+				+ "Memória Sistema: "+ somaMemoria + ", "
+				+ "Bloqueio Sistema: "+ somaBloqueio +"\n");
+			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
 
-
+	
 	public String getIP() {
 		return this.conexao.getInetAddress().getHostAddress();
 	}
@@ -84,6 +89,8 @@ public class Conexao {
 	public void setConexao(Socket conexao) {
 		this.conexao = conexao;
 	}
+
+
 
 	public String getNomeConexao() {
 		return nomeConexao;

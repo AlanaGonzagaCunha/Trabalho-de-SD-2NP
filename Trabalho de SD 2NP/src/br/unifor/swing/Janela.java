@@ -61,15 +61,9 @@ public class Janela extends JFrame {
 	private static Controle controle;
 	private String SEPARADOR = "";
 
-	// private Configuracoes configuracoes;
-
-	/*
-	 * 1- Qdo tenho mais de dois cliente conectado preciso enviar minha informações
-	 * para outros clientes atualizarem o sistema e realizar o somatorio. --> envio
-	 * separador 2- Preciso receber para atualizar meu sistema e GUI. --> recebe
-	 * sepador/quebra/realiza soma
-	 */
-
+	String cpuLocal, memoriaLocal, bloqueioLocal;
+	int somaCpu, somaMemoria, somaBloqueio;
+	
 	public static void main(String[] args) {
 		controle = new Controle();
 		Janela janela = new Janela();
@@ -184,27 +178,28 @@ public class Janela extends JFrame {
 						&& !localExibeMemoria.getText().isEmpty() && !localExibeMemoria.isFocusOwner()
 						&& !localExibeBloqueio.getText().isEmpty() && !localExibeBloqueio.isFocusOwner()) {
 
-					String cpuLocal = localExibeCPU.getText();
-					String memoriaLocal = localExibeMemoria.getText();
-					String bloqueioLocal = localExibeBloqueio.getText();
+					 cpuLocal = localExibeCPU.getText();
+					 memoriaLocal = localExibeMemoria.getText();
+					 bloqueioLocal = localExibeBloqueio.getText();
 
 					SEPARADOR = cpuLocal + "|" + memoriaLocal + "|" + bloqueioLocal + ">";
 
 					System.out.println("Separador: " + SEPARADOR);
-					// controle.getConfiguracoesControle().setCpu(cpuLocal);
-					// controle.getConfiguracoesControle().setMemoria(memoriaLocal);
-					// controle.getConfiguracoesControle().setBloqueio(bloqueioLocal);
 
 					if (controle.verficaConexao()) {
 						System.out.println("VÁRIAS conexões");
+
 						controle.enviaMensagemControle(SEPARADOR);
-						System.out.println("teste" + controle.getConfiguracoesControle().getCpu());
-
-						sistExibeCPU.setText(controle.getConfiguracoesControle().getCpu());
-						sistExibeMemoria.setText(controle.getConfiguracoesControle().getMemoria());
-						sistExibeBloqueio.setText(controle.getConfiguracoesControle().getBloqueio());
+								
+						 somaCpu=Integer.parseInt(cpuLocal)+Integer.parseInt(controle.getConfiguracoesControle().getCpu());
+						 somaMemoria=Integer.parseInt(memoriaLocal);
+						 somaBloqueio=Integer.parseInt(bloqueioLocal);
+						
+						
+						sistExibeCPU.setText(""+somaCpu);
+						sistExibeMemoria.setText(""+somaMemoria);
+						sistExibeBloqueio.setText(""+somaBloqueio);
 						repaint();
-
 					} else {
 						// primeira conexao
 						System.out.println("ÚNICA conexão!");
@@ -216,11 +211,13 @@ public class Janela extends JFrame {
 						sistExibeMemoria.setText(memoriaLocal);
 						sistExibeBloqueio.setText(bloqueioLocal);
 						repaint();
+
 					}
 
 					localExibeCPU.setText("");
 					localExibeMemoria.setText("");
 					localExibeBloqueio.setText("");
+					repaint();
 
 				}
 			}

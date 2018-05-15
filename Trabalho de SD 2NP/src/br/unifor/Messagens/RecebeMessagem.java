@@ -18,19 +18,18 @@ public class RecebeMessagem implements Runnable {
 	@Override
 	public void run() {
 
-		
-			try {
+		try {
 
-				Scanner entrada = new Scanner(conexao.getConexao().getInputStream());
-				
-				while(entrada.hasNextLine()) {
+			Scanner entrada = new Scanner(conexao.getConexao().getInputStream());
 
-					this.conexao.enviaMensagem(entrada.nextLine() );
-				}
-				
-			} catch (IOException e) {
-				e.printStackTrace();
+			while (entrada.hasNextLine()) {
+
+				this.conexao.enviaMensagemConexao(entrada.nextLine());
 			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+	}
 
 }

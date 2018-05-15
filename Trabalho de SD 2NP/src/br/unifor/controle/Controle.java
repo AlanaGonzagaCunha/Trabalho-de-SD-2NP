@@ -18,6 +18,7 @@ public class Controle {
 
 	private static Configuracoes configuracoes;
 	private static ArrayList<Conexao> conexoes = new ArrayList<Conexao>();
+	String recebeCpu, recebeMemoria, recebeBloqueio;
 
 	public String getSEPARADOR() {
 		return SEPARADOR;
@@ -50,7 +51,6 @@ public class Controle {
 		Conexao conexaoJaExistente = this.isConexao(ipNovaConexao);
 
 		if (conexaoJaExistente != null) {
-			//ja existe conexao remove
 			this.conexoes.remove(conexaoJaExistente);
 		}
 
@@ -140,13 +140,12 @@ public class Controle {
 		this.cliente.enviaMessagem(sep);
 	}
 
-	public void enviaSomatorio(String a) {
-		this.cliente.somatorio(a);
-	}
-	
+
 	public Configuracoes getConfiguracoesControle() {
 		return this.configuracoes;
 	}
+
+	
 
 
 }
