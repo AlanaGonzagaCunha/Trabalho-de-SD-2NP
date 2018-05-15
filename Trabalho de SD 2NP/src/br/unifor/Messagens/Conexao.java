@@ -54,7 +54,7 @@ public class Conexao {
 			System.out.println("Valores recebidos de: "
 					+ " Cpu: " + configuracoes.getCpu()+","
 					+ " Memoria: " + configuracoes.getMemoria() +","
-					+ " Bloqueio: "+ configuracoes.getBloqueio());
+					+ " Bloqueio: "+ configuracoes.getBloqueio() );
 			
 			controle.enviaSomatorio(mensagem);
 
