@@ -197,10 +197,11 @@ public class Janela extends JFrame {
 						//há várias conexões
 						System.out.println("VÁRIAS conexões");
 					
-						//1º enviar valores --> ok!
-						controle.enviaMensagemControle(SEPARADOR);
-						//2º realizar o somatorio -->
-						controle.enviaSomatorio(SEPARADOR);
+					controle.enviaMensagemControle(SEPARADOR);
+					
+					//	controle.enviaSomatorio(SEPARADOR);
+						
+						
 						//3º atualiza interface --> 
 						sistExibeCPU.setText(controle.getConfiguracoesControle().getCpu());
 						sistExibeMemoria.setText(controle.getConfiguracoesControle().getMemoria());

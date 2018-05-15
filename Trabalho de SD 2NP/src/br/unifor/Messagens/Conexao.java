@@ -55,6 +55,8 @@ public class Conexao {
 					+ " Cpu: " + configuracoes.getCpu()+","
 					+ " Memoria: " + configuracoes.getMemoria() +","
 					+ " Bloqueio: "+ configuracoes.getBloqueio());
+			
+			controle.enviaSomatorio(mensagem);
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
