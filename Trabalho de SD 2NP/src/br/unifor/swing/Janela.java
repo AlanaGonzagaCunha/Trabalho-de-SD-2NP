@@ -59,19 +59,19 @@ public class Janela extends JFrame {
 	private JTextField localExibeBloqueio;
 	private JTable tabela;
 	private static Controle controle;
-	private String SEPARADOR="";
+	private String SEPARADOR = "";
 
-	//private Configuracoes configuracoes;
+	// private Configuracoes configuracoes;
 
 	/*
-	 * 1- Qdo tenho mais de dois cliente conectado preciso enviar minha informações para outros
-	clientes atualizarem o sistema e realizar o somatorio. --> envio separador
-	 * 2- Preciso receber para atualizar meu sistema e GUI. --> recebe sepador/quebra/realiza soma 
-	*/
-	
-	
+	 * 1- Qdo tenho mais de dois cliente conectado preciso enviar minha informações
+	 * para outros clientes atualizarem o sistema e realizar o somatorio. --> envio
+	 * separador 2- Preciso receber para atualizar meu sistema e GUI. --> recebe
+	 * sepador/quebra/realiza soma
+	 */
+
 	public static void main(String[] args) {
-		 controle = new Controle();
+		controle = new Controle();
 		Janela janela = new Janela();
 	}
 
@@ -188,39 +188,36 @@ public class Janela extends JFrame {
 					String memoriaLocal = localExibeMemoria.getText();
 					String bloqueioLocal = localExibeBloqueio.getText();
 
-					
-					SEPARADOR=cpuLocal+"|"+memoriaLocal+"|"+bloqueioLocal+">";
+					SEPARADOR = cpuLocal + "|" + memoriaLocal + "|" + bloqueioLocal + ">";
 
-					System.out.println("Separador: "+ SEPARADOR);
-					
-					if(controle.verficaConexao()) {
-						//há várias conexões
+					System.out.println("Separador: " + SEPARADOR);
+					// controle.getConfiguracoesControle().setCpu(cpuLocal);
+					// controle.getConfiguracoesControle().setMemoria(memoriaLocal);
+					// controle.getConfiguracoesControle().setBloqueio(bloqueioLocal);
+
+					if (controle.verficaConexao()) {
 						System.out.println("VÁRIAS conexões");
-					
-					controle.enviaMensagemControle(SEPARADOR);
-					
-					//	controle.enviaSomatorio(SEPARADOR);
-						
-						
-						//3º atualiza interface --> 
+						controle.enviaMensagemControle(SEPARADOR);
+						System.out.println("teste" + controle.getConfiguracoesControle().getCpu());
+
 						sistExibeCPU.setText(controle.getConfiguracoesControle().getCpu());
 						sistExibeMemoria.setText(controle.getConfiguracoesControle().getMemoria());
 						sistExibeBloqueio.setText(controle.getConfiguracoesControle().getBloqueio());
 						repaint();
-						
-					}else {
-						//primeira conexao
+
+					} else {
+						// primeira conexao
 						System.out.println("ÚNICA conexão!");
 						controle.getConfiguracoesControle().setCpu(cpuLocal);
 						controle.getConfiguracoesControle().setMemoria(memoriaLocal);
 						controle.getConfiguracoesControle().setBloqueio(bloqueioLocal);
-											
+
 						sistExibeCPU.setText(cpuLocal);
 						sistExibeMemoria.setText(memoriaLocal);
 						sistExibeBloqueio.setText(bloqueioLocal);
 						repaint();
 					}
-									
+
 					localExibeCPU.setText("");
 					localExibeMemoria.setText("");
 					localExibeBloqueio.setText("");
@@ -228,13 +225,8 @@ public class Janela extends JFrame {
 				}
 			}
 
-		
-
-						
 		});
 
 	}
-
-
 
 }

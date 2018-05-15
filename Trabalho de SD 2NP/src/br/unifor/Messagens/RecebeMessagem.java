@@ -20,10 +20,11 @@ public class RecebeMessagem implements Runnable {
 
 		
 			try {
-				
+
 				Scanner entrada = new Scanner(conexao.getConexao().getInputStream());
 				
 				while(entrada.hasNextLine()) {
+
 					this.conexao.enviaMensagem(entrada.nextLine() );
 				}
 				
@@ -31,6 +32,5 @@ public class RecebeMessagem implements Runnable {
 				e.printStackTrace();
 			}
 		}
-					
-}
 
+}

@@ -14,11 +14,11 @@ public class Conexao {
 	private Configuracoes configuracoes;
 	String mgsRecebida;
 
-	public Conexao(Socket conexao, Controle controle) {
+	public Conexao(Socket conexao, Controle controle, Configuracoes c) {
 
 		this.conexao = conexao;
 		this.controle = controle;
-		this.configuracoes = new Configuracoes("0", "0", "0");
+		this.configuracoes = c;
 
 		this.escutaMensagem();
 	}
@@ -32,11 +32,10 @@ public class Conexao {
 	public void enviaMensagem(String mensagem) {
 
 		try {
-
-			System.out.println("Enviando mensagem para " + this.getConexao().getInetAddress().getHostAddress());
+			System.out.println("\n Enviando mensagem para " + this.getConexao().getInetAddress().getHostAddress()+"\n");
 			PrintStream saida;
 			saida = new PrintStream(this.getConexao().getOutputStream());
-			System.out.println("Messagem recebida: "+ mensagem);
+			System.out.println("Messagem recebida: "+ mensagem +"\n");
 			saida.println(mensagem);
 			
 			String[] vetorSeparador = mensagem.split("\\|");	
@@ -48,15 +47,15 @@ public class Conexao {
 			String v [] = b.split("\\>");
 			String bloqueio = v[0];
 			
-			configuracoes.setCpu(cpu);
-			configuracoes.setMemoria(memoria);
-			configuracoes.setBloqueio(bloqueio);
+						
 			System.out.println("Valores recebidos de: "
-					+ " Cpu: " + configuracoes.getCpu()+","
-					+ " Memoria: " + configuracoes.getMemoria() +","
-					+ " Bloqueio: "+ configuracoes.getBloqueio() );
+					+ "\n Cpu: " + cpu +","
+					+ " Memoria: " + memoria +","
+					+ " Bloqueio: "+ bloqueio );
 			
-			controle.enviaSomatorio(mensagem);
+			controle.getConfiguracoesControle().setCpu(cpu);
+			controle.getConfiguracoesControle().setMemoria(memoria);
+			controle.getConfiguracoesControle().setBloqueio(bloqueio);
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

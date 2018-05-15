@@ -30,7 +30,7 @@ public class Controle {
 	public Controle() {
 		this.configuracoes = new Configuracoes("12345", "100", "2000", "100");
 		Servidor servidor = new Servidor(this);
-		Cliente cliente = new Cliente(this);
+		cliente = new Cliente(this, configuracoes);
 		verificaRede();
 	}
 
@@ -54,7 +54,7 @@ public class Controle {
 			this.conexoes.remove(conexaoJaExistente);
 		}
 
-		Conexao novaConexao = new Conexao(socket, this);
+		Conexao novaConexao = new Conexao(socket, this,configuracoes);
 
 		this.conexoes.add(novaConexao);
 

@@ -9,68 +9,65 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 
 import br.unifor.Messagens.Conexao;
+import br.unifor.configurações.Configuracoes;
 import br.unifor.controle.Controle;
 
 public class Cliente {
-	private final String SEPARADOR="";
-	
+	private final String SEPARADOR = "";
+
 	private static Controle controle;
+	private static Configuracoes configuracoes;
 
-	public Cliente(Controle controle) {
-		this.controle= controle;
+	public Cliente(Controle controle, Configuracoes configuracoes) {
+		this.controle = controle;
+		this.configuracoes= configuracoes;
 	}
-	
+
 	public void somatorio(String a) {
-		
+
 		System.out.println("Usa o separador para pegar as variáveis... ");
-		String[] vetorSeparador = a.split("\\|");	
-		
-		String cpu = vetorSeparador[0];
-		String memoria = vetorSeparador[1];
+		String[] vetorSeparador = a.split("\\|");
+
+		String cpuRecebida = vetorSeparador[0];
+		String memoriaRecebida = vetorSeparador[1];
 		String b = vetorSeparador[2];
-		
-		String v [] = b.split("\\>");
-		String bloqueio = v[0];
-		
-		System.out.println("CPU Local: " + cpu);
-		System.out.println("MEMORIA Local: " + memoria);
-		System.out.println("BLOQUEIO Local:" + bloqueio);
 
-		int cpuConexao = 0, memoriaConexao = 0, bloqueioConexao = 0;
+		String v[] = b.split("\\>");
+		String bloqueioRecebida = v[0];
 
-		for (Conexao c : this.controle.getConexoes()) {
-			cpuConexao = Integer.parseInt(c.getConfiguracoes().getCpu());
-			memoriaConexao = Integer.parseInt(c.getConfiguracoes().getMemoria());
-			bloqueioConexao = Integer.parseInt(c.getConfiguracoes().getBloqueio());
-
-			cpuConexao += Integer.parseInt(cpu);
-			memoriaConexao += Integer.parseInt(memoria);
-			bloqueioConexao += Integer.parseInt(bloqueio);
-			
-			System.out.println("\n Valores somados... ");
-			System.out.println("\n CPU SISTEMA: "+ cpuConexao);
-			System.out.println("\n MEMORIA: SISTEMA: "+ memoriaConexao);
-			System.out.println("\n BLOQUEIO SISTEMA: " + bloqueioConexao);
-
-		}
-		controle.getConfiguracoesControle().setCpu(""+cpuConexao);
-		controle.getConfiguracoesControle().setMemoria(""+memoriaConexao);
-		controle.getConfiguracoesControle().setBloqueio(""+bloqueioConexao);
+		int somaCpu = 0, somaMemoria = 0, somaBloqueio = 0;
+	
 		
-		
+		somaCpu = Integer.parseInt(configuracoes.getCpu())
+				+ Integer.parseInt(controle.getConfiguracoesControle().getCpu());
+		somaMemoria = Integer.parseInt(configuracoes.getMemoria())
+				+ Integer.parseInt(controle.getConfiguracoesControle().getMemoria());
+		somaBloqueio = Integer.parseInt(configuracoes.getBloqueio())
+				+ Integer.parseInt(controle.getConfiguracoesControle().getBloqueio());
+
+		System.out.println("\n Valores somados... ");
+		System.out.println("\n CPU SISTEMA: " + somaCpu);
+		System.out.println("\n MEMORIA: SISTEMA: " + somaMemoria);
+		System.out.println("\n BLOQUEIO SISTEMA: " + somaBloqueio);
+
+		controle.getConfiguracoesControle().setCpu("" + somaCpu);
+		controle.getConfiguracoesControle().setMemoria("" + somaMemoria);
+		controle.getConfiguracoesControle().setBloqueio("" + somaBloqueio);
 	}
 
 	public void enviaMessagem(String mgs) {
 
-			System.out.println("O cliente conectou ao servidor, envia separador para todos conectados: " +mgs);
+		System.out.println("O cliente conectou ao servidor, envia separador para todos conectados: " + mgs);
 
-			for(Conexao conexao: this.controle.getConexoes()) {
-				
+		int cont = 0;
+		
+		for (Conexao conexao : this.controle.getConexoes()) {
+			if (controle.getConexoes().size() == cont) {
 				conexao.enviaMensagem(mgs);
-
+				cont++;
 			}
-	}
 
-	
+		}
+	}
 
 }
