@@ -23,7 +23,8 @@ public class Controle {
 	private static Configuracoes configuracoes;
 	private static ArrayList<Conexao> conexoes = new ArrayList<Conexao>();
 	String recebeCpu, recebeMemoria, recebeBloqueio;
-
+	private String ip;
+	
 	public String getSEPARADOR() {
 		return SEPARADOR;
 	}
@@ -37,6 +38,7 @@ public class Controle {
 		Servidor servidor = new Servidor(this);
 		cliente = new Cliente(this, configuracoes);
 		verificaRede();
+
 	}
 
 	public void conectaServidor(String ip) {
@@ -44,16 +46,15 @@ public class Controle {
 
 		Thread agenteConectarComServidor = new Thread(agente);
 		agenteConectarComServidor.start();
+	//	Janela.modelo.addRow(new String [] {configuracoes.getIp(), configuracoes.getPorta()});
 	}
 
 	public void recebeConexao(Socket socket) {
-
 		String ipNovaConexao = socket.getInetAddress().getHostAddress();
 
 		Janela.txtArea.append("Conexão " + ipNovaConexao + " adicionada a lista. \n");
 		System.out.println("Conexão " + ipNovaConexao + " adicionada a lista.");
 		
-		//Janela.tabela.addRow(""+ipNovaConexao);
 
 		Conexao conexaoJaExistente = this.isConexao(ipNovaConexao);
 
@@ -64,6 +65,7 @@ public class Controle {
 		Conexao novaConexao = new Conexao(socket, this,configuracoes);
 
 		this.conexoes.add(novaConexao);
+		Janela.modelo.addRow(new String [] {novaConexao.getIP(), configuracoes.getPorta()});
 
 	}
 
@@ -89,6 +91,7 @@ public class Controle {
 		return null;
 	}
 
+	
 	public void verificaRede() {
 
 		String ip = this.localizaRede();
@@ -98,7 +101,6 @@ public class Controle {
 
 			if (this.configuracoes.getIp().equals(verificaIPs)) {
 				System.out.println("Já existe conexao aberta no ip: " + verificaIPs);
-
 
 			} else {
 

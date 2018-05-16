@@ -40,9 +40,9 @@ public class Conexao {
 		try {
 			System.out
 					.println("\n Enviando mensagem para " + this.getConexao().getInetAddress().getHostAddress() + "\n");
-			Janela.txtArea.append("\n Enviando mensagem para " + this.getConexao().getInetAddress().getHostAddress() + "\n");
-			
-			
+			Janela.txtArea
+					.append("\n Enviando mensagem para " + this.getConexao().getInetAddress().getHostAddress() + "\n");
+
 			PrintStream saida;
 			saida = new PrintStream(this.getConexao().getOutputStream());
 			System.out.println("Messagem recebida: " + mensagem + "\n");
@@ -68,8 +68,8 @@ public class Conexao {
 			somaBloqueio = (Integer.parseInt(controle.getConfiguracoesControle().getBloqueio())
 					+ (Integer.parseInt(bloqueio)));
 
-			Janela.txtArea.append("Soma sistema:" + "\n Cpu Sistema: " + somaCpu + ", " + "\n Memória Sistema: " + somaMemoria
-					+ ", " + "\n Bloqueio Sistema: " + somaBloqueio + "\n");
+			Janela.txtArea.append("Soma sistema:" + "\n Cpu Sistema: " + somaCpu + ", " + "\n Memória Sistema: "
+					+ somaMemoria + ", " + "\n Bloqueio Sistema: " + somaBloqueio + "\n");
 			System.out.println("Soma sistema:" + "\n Cpu Sistema: " + somaCpu + ", " + "Memória Sistema: " + somaMemoria
 					+ ", " + "Bloqueio Sistema: " + somaBloqueio + "\n");
 
@@ -77,11 +77,9 @@ public class Conexao {
 			controle.getConfiguracoesControle().setMemoria("" + somaMemoria);
 			controle.getConfiguracoesControle().setBloqueio("" + somaBloqueio);
 
-
-			Janela.sistExibeCPU.setText(""+somaCpu);
-			Janela.sistExibeMemoria.setText(""+somaMemoria);
-			Janela.sistExibeBloqueio.setText(""+somaBloqueio);
-			
+			Janela.sistExibeCPU.setText("" + somaCpu);
+			Janela.sistExibeMemoria.setText("" + somaMemoria);
+			Janela.sistExibeBloqueio.setText("" + somaBloqueio);
 
 		} catch (IOException e) {
 			e.printStackTrace();

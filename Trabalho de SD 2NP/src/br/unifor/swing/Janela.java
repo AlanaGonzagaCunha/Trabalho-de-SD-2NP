@@ -36,7 +36,7 @@ import br.unifor.controle.Controle;
 
 public class Janela extends JFrame {
 
-	private JFrame janela;
+	public static JFrame janela;
 	private JButton btnEnviar;
 	private JPanel painelLog;
 	public static JTextArea txtArea;
@@ -61,13 +61,16 @@ public class Janela extends JFrame {
 	private static Controle controle;
 	private String SEPARADOR = "";
 	String colunas[] = { "IP", "PORTA" };
+	public static DefaultTableModel modelo;
+	static Configuracoes c;
 
 	String cpuLocal, memoriaLocal, bloqueioLocal;
 	int somaCpu, somaMemoria, somaBloqueio;
 
 	public static void main(String[] args) {
 		controle = new Controle();
-		Janela janela = new Janela();
+		janela = new Janela();
+		c = new Configuracoes("0", "0", "0");
 	}
 
 	public Janela() {
@@ -94,7 +97,7 @@ public class Janela extends JFrame {
 		sistExibeBloqueio = new JTextField();
 		txtArea = new JTextArea();
 		scrollTxt = new JScrollPane(txtArea);
-		DefaultTableModel modelo = new DefaultTableModel(colunas, 3);
+		modelo = new DefaultTableModel(colunas, 3);
 		tabela = new JTable(modelo);
 
 		setTitle("Trabalho de SD");
@@ -105,12 +108,6 @@ public class Janela extends JFrame {
 		setResizable(false);
 		setLayout(null);
 
-		modelo = new DefaultTableModel(){ 
-		    public boolean isCellEditable(int rowIndex, int mColIndex){ 
-		         return false; 
-		    } 
-		}; 
-		
 		local.setLocation(25, 250);
 		local.setSize(150, 150);
 		localCPU.setLocation(25, 280);
@@ -150,8 +147,11 @@ public class Janela extends JFrame {
 		tabela.setLocation(330, 100);
 		tabela.setSize(250, 80);
 
-		
-		modelo.addRow(new String [] {"Ip", "Porta"});
+		// modelo.addRow(new String [] {"Ip", "Porta"});
+
+		modelo.insertRow(0, new String[] { "IP:", "Porta:" });
+		modelo.insertRow(1, new String[] { controle.getConfiguracoesControle().getIp(),
+				controle.getConfiguracoesControle().getPorta() });
 
 		scrollTxt.setBounds(10, 30, 300, 250);
 		scrollTxt.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -178,7 +178,6 @@ public class Janela extends JFrame {
 		getContentPane().add(scrollTxt);
 		repaint();
 		tratarEventos();
-
 	}
 
 	public boolean isCellEditable(int linha, int col) {
@@ -186,7 +185,6 @@ public class Janela extends JFrame {
 	}
 
 	public void tratarEventos() {
-	
 
 		btnEnviar.addActionListener(new ActionListener() {
 			@Override
@@ -203,20 +201,23 @@ public class Janela extends JFrame {
 					SEPARADOR = cpuLocal + "|" + memoriaLocal + "|" + bloqueioLocal + ">";
 
 					System.out.println("Separador: " + SEPARADOR);
-					txtArea.append("\n Separador: " + SEPARADOR +"\n");
+					txtArea.append("\n Separador: " + SEPARADOR + "\n");
 
 					if (controle.verficaConexao()) {
 						System.out.println("VÁRIAS conexões");
 
 						controle.enviaMensagemControle(SEPARADOR);
 
-						
 					} else {
 						// primeira conexao
 						System.out.println("ÚNICA conexão!");
 						controle.getConfiguracoesControle().setCpu(cpuLocal);
 						controle.getConfiguracoesControle().setMemoria(memoriaLocal);
 						controle.getConfiguracoesControle().setBloqueio(bloqueioLocal);
+
+						txtArea.append("\n Cpu Local: " + cpuLocal + "\n");
+						txtArea.append("\n Memória Local: " + memoriaLocal + "\n");
+						txtArea.append("\n Bloqueio Local: " + bloqueioLocal + "\n");
 
 						sistExibeCPU.setText(cpuLocal);
 						sistExibeMemoria.setText(memoriaLocal);
