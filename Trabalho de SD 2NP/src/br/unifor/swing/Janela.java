@@ -47,9 +47,9 @@ public class Janela extends JFrame {
 	private JLabel sistemaCPU;
 	private JLabel sistemaMemoria;
 	private JLabel sistemaBloqueio;
-	private JTextField sistExibeCPU;
-	private JTextField sistExibeMemoria;
-	private JTextField sistExibeBloqueio;
+	public static JTextField sistExibeCPU;
+	public static JTextField sistExibeMemoria;
+	public static JTextField sistExibeBloqueio;
 	private JLabel local;
 	private JLabel localCPU;
 	private JLabel localMemoria;
@@ -63,7 +63,7 @@ public class Janela extends JFrame {
 
 	String cpuLocal, memoriaLocal, bloqueioLocal;
 	int somaCpu, somaMemoria, somaBloqueio;
-	
+
 	public static void main(String[] args) {
 		controle = new Controle();
 		Janela janela = new Janela();
@@ -178,9 +178,9 @@ public class Janela extends JFrame {
 						&& !localExibeMemoria.getText().isEmpty() && !localExibeMemoria.isFocusOwner()
 						&& !localExibeBloqueio.getText().isEmpty() && !localExibeBloqueio.isFocusOwner()) {
 
-					 cpuLocal = localExibeCPU.getText();
-					 memoriaLocal = localExibeMemoria.getText();
-					 bloqueioLocal = localExibeBloqueio.getText();
+					cpuLocal = localExibeCPU.getText();
+					memoriaLocal = localExibeMemoria.getText();
+					bloqueioLocal = localExibeBloqueio.getText();
 
 					SEPARADOR = cpuLocal + "|" + memoriaLocal + "|" + bloqueioLocal + ">";
 
@@ -190,16 +190,8 @@ public class Janela extends JFrame {
 						System.out.println("VÁRIAS conexões");
 
 						controle.enviaMensagemControle(SEPARADOR);
-								
-						 somaCpu=Integer.parseInt(cpuLocal)+Integer.parseInt(controle.getConfiguracoesControle().getCpu());
-						 somaMemoria=Integer.parseInt(memoriaLocal);
-						 somaBloqueio=Integer.parseInt(bloqueioLocal);
+
 						
-						
-						sistExibeCPU.setText(""+somaCpu);
-						sistExibeMemoria.setText(""+somaMemoria);
-						sistExibeBloqueio.setText(""+somaBloqueio);
-						repaint();
 					} else {
 						// primeira conexao
 						System.out.println("ÚNICA conexão!");

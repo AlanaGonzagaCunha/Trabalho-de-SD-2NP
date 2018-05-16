@@ -4,15 +4,24 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.Scanner;
 
+import javax.swing.JFrame;
+import javax.swing.JTextField;
+
 import br.unifor.configurações.Configuracoes;
 import br.unifor.controle.Controle;
 
 public class RecebeMessagem implements Runnable {
 
 	private Conexao conexao;
+	private JTextField sistExibeCPU;
+	private JTextField sistExibeMemoria;
+	private JTextField sistExibeBloqueio;
+	JFrame janela;
 
 	public RecebeMessagem(Conexao conexao) {
+		sistExibeCPU = new JTextField();
 		this.conexao = conexao;
+		
 	}
 
 	@Override
@@ -25,6 +34,7 @@ public class RecebeMessagem implements Runnable {
 			while (entrada.hasNextLine()) {
 
 				this.conexao.enviaMensagemConexao(entrada.nextLine());
+						
 			}
 
 		} catch (IOException e) {

@@ -5,6 +5,9 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import javax.swing.JFrame;
+import javax.swing.JTextField;
+
 import br.unifor.Messagens.Conexao;
 import br.unifor.cliente.*;
 import br.unifor.configurações.Configuracoes;

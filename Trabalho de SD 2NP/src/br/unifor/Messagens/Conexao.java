@@ -3,8 +3,13 @@ package br.unifor.Messagens;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
+
+import javax.swing.JFrame;
+import javax.swing.JTextField;
+
 import br.unifor.configurações.Configuracoes;
 import br.unifor.controle.Controle;
+import br.unifor.swing.Janela;
 
 public class Conexao {
 	private Controle controle;
@@ -12,8 +17,7 @@ public class Conexao {
 	private String nomeConexao;
 	private Thread recebeMensagens;
 	private Configuracoes configuracoes;
-	String mgsRecebida;
-	
+
 	int somaCpu, somaMemoria, somaBloqueio;
 
 	public Conexao(Socket conexao, Controle controle, Configuracoes c) {
@@ -34,42 +38,50 @@ public class Conexao {
 	public void enviaMensagemConexao(String mensagem) {
 
 		try {
-			System.out.println("\n Enviando mensagem para " + this.getConexao().getInetAddress().getHostAddress()+"\n");
-			
+			System.out
+					.println("\n Enviando mensagem para " + this.getConexao().getInetAddress().getHostAddress() + "\n");
+
 			PrintStream saida;
 			saida = new PrintStream(this.getConexao().getOutputStream());
-			System.out.println("Messagem recebida: "+ mensagem +"\n");
-			saida.println(mensagem);			
-			
-			String[] vetorSeparador = mensagem.split("\\|");	
+			System.out.println("Messagem recebida: " + mensagem + "\n");
+			saida.println(mensagem);
+
+			String[] vetorSeparador = mensagem.split("\\|");
 			String cpu = vetorSeparador[0];
 			String memoria = vetorSeparador[1];
 			String b = vetorSeparador[2];
-			
-			String v [] = b.split("\\>");
+
+			String v[] = b.split("\\>");
 			String bloqueio = v[0];
+
+			System.out.println("Valores recebidos de: " + "\n Cpu: " + cpu + "," + " Memoria: " + memoria + ","
+					+ " Bloqueio: " + bloqueio + "\n");
+
+			somaCpu = (Integer.parseInt(controle.getConfiguracoesControle().getCpu()) + (Integer.parseInt(cpu)));
+			somaMemoria = (Integer.parseInt(controle.getConfiguracoesControle().getMemoria())
+					+ (Integer.parseInt(memoria)));
+			somaBloqueio = (Integer.parseInt(controle.getConfiguracoesControle().getBloqueio())
+					+ (Integer.parseInt(bloqueio)));
+
+			System.out.println("Soma sistema:" + "\n Cpu Sistema: " + somaCpu + ", " + "Memória Sistema: " + somaMemoria
+					+ ", " + "Bloqueio Sistema: " + somaBloqueio + "\n");
+
+			controle.getConfiguracoesControle().setCpu("" + somaCpu);
+			controle.getConfiguracoesControle().setMemoria("" + somaMemoria);
+			controle.getConfiguracoesControle().setBloqueio("" + somaBloqueio);
+
+
+			Janela.sistExibeCPU.setText(""+somaCpu);
+			Janela.sistExibeMemoria.setText(""+somaMemoria);
+			Janela.sistExibeBloqueio.setText(""+somaBloqueio);
 			
-			System.out.println("Valores recebidos de: "
-					+ "\n Cpu: " + cpu +","
-					+ " Memoria: " + memoria +","
-					+ " Bloqueio: "+ bloqueio +"\n");
-			
-			somaCpu = (Integer.parseInt(controle.getConfiguracoesControle().getCpu())+ (Integer.parseInt(cpu)));
-			somaMemoria = (Integer.parseInt(controle.getConfiguracoesControle().getMemoria())+ (Integer.parseInt(memoria)));
-			somaBloqueio = (Integer.parseInt(controle.getConfiguracoesControle().getBloqueio())+ (Integer.parseInt(bloqueio)));
-						
-		System.out.println("Soma sistema:"
-				+ "\n Cpu Sistema: "+ somaCpu +", "
-				+ "Memória Sistema: "+ somaMemoria + ", "
-				+ "Bloqueio Sistema: "+ somaBloqueio +"\n");
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 	}
 
-	
 	public String getIP() {
 		return this.conexao.getInetAddress().getHostAddress();
 	}
@@ -89,8 +101,6 @@ public class Conexao {
 	public void setConexao(Socket conexao) {
 		this.conexao = conexao;
 	}
-
-
 
 	public String getNomeConexao() {
 		return nomeConexao;
