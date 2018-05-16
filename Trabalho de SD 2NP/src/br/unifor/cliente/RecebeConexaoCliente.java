@@ -5,6 +5,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 import br.unifor.controle.Controle;
+import br.unifor.swing.Janela;
 
 public class RecebeConexaoCliente implements Runnable {
 
@@ -23,7 +24,9 @@ public class RecebeConexaoCliente implements Runnable {
 
 		try {
 			Socket abreConexao = new Socket(this.ip, this.porta);
-			System.out.println("Cliene conectado no servidor!!!");
+			System.out.println("Cliente conectado no servidor!!!");
+			Janela.txtArea.append("Cliente conectado no servidor!!! \n");
+			
 			this.controle.recebeConexao(abreConexao);
 
 		} catch (IOException e) {

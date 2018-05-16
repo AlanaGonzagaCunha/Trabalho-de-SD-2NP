@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.Scanner;
 
+import br.unifor.swing.Janela;
+
 public class RecebeConexaoServidor implements Runnable {
 	private Servidor server;
 	
@@ -26,7 +28,10 @@ public class RecebeConexaoServidor implements Runnable {
 		while(true) {
 		try {
 			System.out.println("Esperando novas conexões...");
+			
 			cliente = server.getServidor().accept();
+			
+			Janela.txtArea.append("Nova conexão com o cliente: " + cliente.getInetAddress().getHostAddress()+ " adicionada! \n");
 			System.out.println("Nova conexão com o cliente: " + cliente.getInetAddress().getHostAddress()+ " adicionada!");
 			this.server.recebeConexao(cliente);
 			

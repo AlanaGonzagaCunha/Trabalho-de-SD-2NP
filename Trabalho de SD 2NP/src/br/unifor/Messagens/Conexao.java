@@ -40,10 +40,13 @@ public class Conexao {
 		try {
 			System.out
 					.println("\n Enviando mensagem para " + this.getConexao().getInetAddress().getHostAddress() + "\n");
-
+			Janela.txtArea.append("\n Enviando mensagem para " + this.getConexao().getInetAddress().getHostAddress() + "\n");
+			
+			
 			PrintStream saida;
 			saida = new PrintStream(this.getConexao().getOutputStream());
 			System.out.println("Messagem recebida: " + mensagem + "\n");
+			Janela.txtArea.append("Messagem recebida: " + mensagem + "\n");
 			saida.println(mensagem);
 
 			String[] vetorSeparador = mensagem.split("\\|");
@@ -54,6 +57,8 @@ public class Conexao {
 			String v[] = b.split("\\>");
 			String bloqueio = v[0];
 
+			Janela.txtArea.append("Valores recebidos de: " + "\n Cpu: " + cpu + "," + "\n Memoria: " + memoria + ","
+					+ "\n Bloqueio: " + bloqueio + "\n");
 			System.out.println("Valores recebidos de: " + "\n Cpu: " + cpu + "," + " Memoria: " + memoria + ","
 					+ " Bloqueio: " + bloqueio + "\n");
 
@@ -63,6 +68,8 @@ public class Conexao {
 			somaBloqueio = (Integer.parseInt(controle.getConfiguracoesControle().getBloqueio())
 					+ (Integer.parseInt(bloqueio)));
 
+			Janela.txtArea.append("Soma sistema:" + "\n Cpu Sistema: " + somaCpu + ", " + "\n Memória Sistema: " + somaMemoria
+					+ ", " + "\n Bloqueio Sistema: " + somaBloqueio + "\n");
 			System.out.println("Soma sistema:" + "\n Cpu Sistema: " + somaCpu + ", " + "Memória Sistema: " + somaMemoria
 					+ ", " + "Bloqueio Sistema: " + somaBloqueio + "\n");
 

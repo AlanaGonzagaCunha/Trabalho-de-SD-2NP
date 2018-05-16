@@ -11,6 +11,7 @@ import java.net.SocketImpl;
 import java.util.Scanner;
 
 import br.unifor.controle.Controle;
+import br.unifor.swing.Janela;
 
 public class Servidor {
 
@@ -30,6 +31,7 @@ public class Servidor {
 	public void iniciaServicos(String porta) {
 		try {
 			System.out.println("Porta: "+porta);
+			
 			this.servidor = new ServerSocket(Integer.parseInt(porta));
 
 			RecebeConexaoServidor recebeConexao = new RecebeConexaoServidor(this);

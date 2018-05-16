@@ -39,7 +39,7 @@ public class Janela extends JFrame {
 	private JFrame janela;
 	private JButton btnEnviar;
 	private JPanel painelLog;
-	private JTextArea txtArea;
+	public static JTextArea txtArea;
 	private JScrollPane scrollTxt;
 	private JScrollPane scrollTabela;
 	private JTextArea exibeMgs;
@@ -57,9 +57,10 @@ public class Janela extends JFrame {
 	private JTextField localExibeCPU;
 	private JTextField localExibeMemoria;
 	private JTextField localExibeBloqueio;
-	private JTable tabela;
+	public static JTable tabela;
 	private static Controle controle;
 	private String SEPARADOR = "";
+	String colunas[] = { "IP", "PORTA" };
 
 	String cpuLocal, memoriaLocal, bloqueioLocal;
 	int somaCpu, somaMemoria, somaBloqueio;
@@ -91,8 +92,10 @@ public class Janela extends JFrame {
 		sistExibeCPU = new JTextField();
 		sistExibeMemoria = new JTextField();
 		sistExibeBloqueio = new JTextField();
+		txtArea = new JTextArea();
 		scrollTxt = new JScrollPane(txtArea);
-		tabela = new JTable();
+		DefaultTableModel modelo = new DefaultTableModel(colunas, 3);
+		tabela = new JTable(modelo);
 
 		setTitle("Trabalho de SD");
 		setVisible(true);
@@ -102,6 +105,12 @@ public class Janela extends JFrame {
 		setResizable(false);
 		setLayout(null);
 
+		modelo = new DefaultTableModel(){ 
+		    public boolean isCellEditable(int rowIndex, int mColIndex){ 
+		         return false; 
+		    } 
+		}; 
+		
 		local.setLocation(25, 250);
 		local.setSize(150, 150);
 		localCPU.setLocation(25, 280);
@@ -138,8 +147,11 @@ public class Janela extends JFrame {
 		btnEnviar.setSize(100, 110);
 		btnEnviar.setLocation(450, 325);
 
-		tabela.setLocation(330, 30);
-		tabela.setSize(250, 100);
+		tabela.setLocation(330, 100);
+		tabela.setSize(250, 80);
+
+		
+		modelo.addRow(new String [] {"Ip", "Porta"});
 
 		scrollTxt.setBounds(10, 30, 300, 250);
 		scrollTxt.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -161,6 +173,7 @@ public class Janela extends JFrame {
 		add(sistExibeCPU);
 		add(sistExibeMemoria);
 		add(sistExibeBloqueio);
+		add(tabela);
 
 		getContentPane().add(scrollTxt);
 		repaint();
@@ -168,7 +181,12 @@ public class Janela extends JFrame {
 
 	}
 
+	public boolean isCellEditable(int linha, int col) {
+		return false;
+	}
+
 	public void tratarEventos() {
+	
 
 		btnEnviar.addActionListener(new ActionListener() {
 			@Override
@@ -185,6 +203,7 @@ public class Janela extends JFrame {
 					SEPARADOR = cpuLocal + "|" + memoriaLocal + "|" + bloqueioLocal + ">";
 
 					System.out.println("Separador: " + SEPARADOR);
+					txtArea.append("\n Separador: " + SEPARADOR +"\n");
 
 					if (controle.verficaConexao()) {
 						System.out.println("VÁRIAS conexões");

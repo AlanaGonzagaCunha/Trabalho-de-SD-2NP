@@ -13,6 +13,7 @@ import br.unifor.cliente.*;
 import br.unifor.configurações.Configuracoes;
 import br.unifor.servidor.RecebeConexaoServidor;
 import br.unifor.servidor.Servidor;
+import br.unifor.swing.Janela;
 
 public class Controle {
 	
@@ -49,7 +50,10 @@ public class Controle {
 
 		String ipNovaConexao = socket.getInetAddress().getHostAddress();
 
+		Janela.txtArea.append("Conexão " + ipNovaConexao + " adicionada a lista. \n");
 		System.out.println("Conexão " + ipNovaConexao + " adicionada a lista.");
+		
+		//Janela.tabela.addRow(""+ipNovaConexao);
 
 		Conexao conexaoJaExistente = this.isConexao(ipNovaConexao);
 
@@ -95,6 +99,7 @@ public class Controle {
 			if (this.configuracoes.getIp().equals(verificaIPs)) {
 				System.out.println("Já existe conexao aberta no ip: " + verificaIPs);
 
+
 			} else {
 
 				Conexao conexao = this.isConexao(verificaIPs);
@@ -115,6 +120,8 @@ public class Controle {
 		System.out.println("IP: " + this.configuracoes.getIp());
 		String ip = this.configuracoes.getIp();
 		String[] vetorIP = ip.split("\\.");
+		
+
 		System.out.println("Endereço de ip base: " + vetorIP[0] + "." + vetorIP[1] + "." + vetorIP[2] + ".");
 
 		return vetorIP[0] + "." + vetorIP[1] + "." + vetorIP[2] + ".";
