@@ -213,8 +213,6 @@ public class Janela extends JFrame {
 
 					} else {
 						
-						System.out.println("ÚNICA conexão!");
-
 						somaCpu+=Integer.parseInt(cpuLocal);
 						somaMemoria+=Integer.parseInt(memoriaLocal);
 						somaBloqueio+=Integer.parseInt(bloqueioLocal);
