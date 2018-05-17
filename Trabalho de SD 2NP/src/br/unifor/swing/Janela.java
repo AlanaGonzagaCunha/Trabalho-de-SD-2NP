@@ -219,9 +219,9 @@ public class Janela extends JFrame {
 						somaMemoria+=Integer.parseInt(memoriaLocal);
 						somaBloqueio+=Integer.parseInt(bloqueioLocal);
 							
-						controle.getConfiguracoesControle().setCpu(cpuLocal);
-						controle.getConfiguracoesControle().setMemoria(memoriaLocal);
-						controle.getConfiguracoesControle().setBloqueio(bloqueioLocal);
+						controle.getConfiguracoesControle().setCpu(""+somaCpu);
+						controle.getConfiguracoesControle().setMemoria(""+somaMemoria	);
+						controle.getConfiguracoesControle().setBloqueio(""+somaBloqueio);
 
 						txtArea.append("\n Cpu Local: " + cpuLocal + "\n");
 						txtArea.append("\n Memória Local: " + memoriaLocal + "\n");
@@ -231,6 +231,7 @@ public class Janela extends JFrame {
 						sistExibeMemoria.setText(""+somaMemoria);
 						sistExibeBloqueio.setText(""+somaBloqueio);
 						repaint();
+
 						}
 					}
 
