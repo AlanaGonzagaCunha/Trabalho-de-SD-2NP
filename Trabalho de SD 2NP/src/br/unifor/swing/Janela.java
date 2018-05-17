@@ -35,7 +35,8 @@ import br.unifor.configurações.Configuracoes;
 import br.unifor.controle.Controle;
 
 public class Janela extends JFrame {
-
+	
+	public static int cont=0;
 	public static JFrame janela;
 	private JButton btnEnviar;
 	private JPanel painelLog;
@@ -147,12 +148,14 @@ public class Janela extends JFrame {
 		tabela.setLocation(330, 100);
 		tabela.setSize(250, 80);
 
-		// modelo.addRow(new String [] {"Ip", "Porta"});
-
-		modelo.insertRow(0, new String[] { "IP:", "Porta:" });
-		modelo.insertRow(1, new String[] { controle.getConfiguracoesControle().getIp(),
+		modelo.insertRow(cont, new String[] { "IP:", "Porta:" });
+	
+		cont++;
+		
+		modelo.insertRow(cont, new String[] { controle.getConfiguracoesControle().getIp(),
 				controle.getConfiguracoesControle().getPorta() });
-
+		cont++;
+		
 		scrollTxt.setBounds(10, 30, 300, 250);
 		scrollTxt.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollTxt.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -209,8 +212,13 @@ public class Janela extends JFrame {
 						controle.enviaMensagemControle(SEPARADOR);
 
 					} else {
-						// primeira conexao
+						
 						System.out.println("ÚNICA conexão!");
+
+						somaCpu+=Integer.parseInt(cpuLocal);
+						somaMemoria+=Integer.parseInt(memoriaLocal);
+						somaBloqueio+=Integer.parseInt(bloqueioLocal);
+							
 						controle.getConfiguracoesControle().setCpu(cpuLocal);
 						controle.getConfiguracoesControle().setMemoria(memoriaLocal);
 						controle.getConfiguracoesControle().setBloqueio(bloqueioLocal);
@@ -219,11 +227,11 @@ public class Janela extends JFrame {
 						txtArea.append("\n Memória Local: " + memoriaLocal + "\n");
 						txtArea.append("\n Bloqueio Local: " + bloqueioLocal + "\n");
 
-						sistExibeCPU.setText(cpuLocal);
-						sistExibeMemoria.setText(memoriaLocal);
-						sistExibeBloqueio.setText(bloqueioLocal);
+						sistExibeCPU.setText(""+somaCpu);
+						sistExibeMemoria.setText(""+somaMemoria);
+						sistExibeBloqueio.setText(""+somaBloqueio);
 						repaint();
-
+						}
 					}
 
 					localExibeCPU.setText("");
@@ -231,7 +239,7 @@ public class Janela extends JFrame {
 					localExibeBloqueio.setText("");
 					repaint();
 
-				}
+				
 			}
 
 		});

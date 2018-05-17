@@ -34,7 +34,7 @@ public class Controle {
 	}
 
 	public Controle() {
-		this.configuracoes = new Configuracoes("12345", "100", "2000", "100");
+		this.configuracoes = new Configuracoes("12345", "0", "0", "0");
 		Servidor servidor = new Servidor(this);
 		cliente = new Cliente(this, configuracoes);
 		verificaRede();
@@ -46,13 +46,14 @@ public class Controle {
 
 		Thread agenteConectarComServidor = new Thread(agente);
 		agenteConectarComServidor.start();
-	//	Janela.modelo.addRow(new String [] {configuracoes.getIp(), configuracoes.getPorta()});
 	}
 
 	public void recebeConexao(Socket socket) {
 		String ipNovaConexao = socket.getInetAddress().getHostAddress();
 
 		Janela.txtArea.append("Conexão " + ipNovaConexao + " adicionada a lista. \n");
+		Janela.modelo.insertRow(Janela.cont, new String [] {ipNovaConexao, ""+socket.getPort()});;
+		
 		System.out.println("Conexão " + ipNovaConexao + " adicionada a lista.");
 		
 
@@ -156,8 +157,5 @@ public class Controle {
 	public Configuracoes getConfiguracoesControle() {
 		return this.configuracoes;
 	}
-
-	
-
 
 }

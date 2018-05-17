@@ -17,6 +17,8 @@ public class Conexao {
 	private String nomeConexao;
 	private Thread recebeMensagens;
 	private Configuracoes configuracoes;
+	private boolean ativa;
+	static int cont=0;
 
 	int somaCpu, somaMemoria, somaBloqueio;
 
@@ -25,6 +27,7 @@ public class Conexao {
 		this.conexao = conexao;
 		this.controle = controle;
 		this.configuracoes = c;
+		ativa = true;
 
 		this.escutaMensagem();
 	}
@@ -35,9 +38,20 @@ public class Conexao {
 		this.recebeMensagens.start();
 	}
 
+	boolean conexQtd = false;
+
+	public boolean isAtiva() {
+		return ativa;
+	}
+
+	public void setAtiva(boolean ativa) {
+		this.ativa = ativa;
+	}
+
 	public void enviaMensagemConexao(String mensagem) {
 
 		try {
+			cont++;
 			System.out
 					.println("\n Enviando mensagem para " + this.getConexao().getInetAddress().getHostAddress() + "\n");
 			Janela.txtArea
@@ -62,25 +76,28 @@ public class Conexao {
 			System.out.println("Valores recebidos de: " + "\n Cpu: " + cpu + "," + " Memoria: " + memoria + ","
 					+ " Bloqueio: " + bloqueio + "\n");
 
-			somaCpu = (Integer.parseInt(controle.getConfiguracoesControle().getCpu()) + (Integer.parseInt(cpu)));
-			somaMemoria = (Integer.parseInt(controle.getConfiguracoesControle().getMemoria())
-					+ (Integer.parseInt(memoria)));
-			somaBloqueio = (Integer.parseInt(controle.getConfiguracoesControle().getBloqueio())
-					+ (Integer.parseInt(bloqueio)));
+				somaCpu = (Integer.parseInt(controle.getConfiguracoesControle().getCpu()) + (Integer.parseInt(cpu)));
+				somaMemoria = (Integer.parseInt(controle.getConfiguracoesControle().getMemoria())
+						+ (Integer.parseInt(memoria)));
+				somaBloqueio = (Integer.parseInt(controle.getConfiguracoesControle().getBloqueio())
+						+ (Integer.parseInt(bloqueio)));
+				System.out.println("teste"+somaCpu);
+						
 
-			Janela.txtArea.append("Soma sistema:" + "\n Cpu Sistema: " + somaCpu + ", " + "\n Memória Sistema: "
-					+ somaMemoria + ", " + "\n Bloqueio Sistema: " + somaBloqueio + "\n");
-			System.out.println("Soma sistema:" + "\n Cpu Sistema: " + somaCpu + ", " + "Memória Sistema: " + somaMemoria
-					+ ", " + "Bloqueio Sistema: " + somaBloqueio + "\n");
+				Janela.txtArea.append("Soma sistema:" + "\n Cpu Sistema: " + somaCpu + ", " + "\n Memória Sistema: "
+						+ somaMemoria + ", " + "\n Bloqueio Sistema: " + somaBloqueio + "\n");
+				System.out.println("Soma sistema:" + "\n Cpu Sistema: " + somaCpu + ", " + "Memória Sistema: "
+						+ somaMemoria + ", " + "Bloqueio Sistema: " + somaBloqueio + "\n");
 
-			controle.getConfiguracoesControle().setCpu("" + somaCpu);
-			controle.getConfiguracoesControle().setMemoria("" + somaMemoria);
-			controle.getConfiguracoesControle().setBloqueio("" + somaBloqueio);
+				controle.getConfiguracoesControle().setCpu("" + somaCpu);
+				controle.getConfiguracoesControle().setMemoria("" + somaMemoria);
+				controle.getConfiguracoesControle().setBloqueio("" + somaBloqueio);
 
-			Janela.sistExibeCPU.setText("" + somaCpu);
-			Janela.sistExibeMemoria.setText("" + somaMemoria);
-			Janela.sistExibeBloqueio.setText("" + somaBloqueio);
+				Janela.sistExibeCPU.setText("" + somaCpu);
+				Janela.sistExibeMemoria.setText("" + somaMemoria);
+				Janela.sistExibeBloqueio.setText("" + somaBloqueio);
 
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
