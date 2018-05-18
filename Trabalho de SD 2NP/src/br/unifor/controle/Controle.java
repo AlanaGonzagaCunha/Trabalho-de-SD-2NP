@@ -16,15 +16,12 @@ import br.unifor.servidor.Servidor;
 import br.unifor.swing.Janela;
 
 public class Controle {
-	
-	private String SEPARADOR = "";
-	Cliente cliente;
 
+	private String SEPARADOR = "";
+	private Cliente cliente;
 	private static Configuracoes configuracoes;
 	private static ArrayList<Conexao> conexoes = new ArrayList<Conexao>();
-	String recebeCpu, recebeMemoria, recebeBloqueio;
-	private String ip;
-	
+
 	public String getSEPARADOR() {
 		return SEPARADOR;
 	}
@@ -52,10 +49,8 @@ public class Controle {
 		String ipNovaConexao = socket.getInetAddress().getHostAddress();
 
 		Janela.txtArea.append("Conexão " + ipNovaConexao + " adicionada a lista. \n");
-		Janela.modelo.insertRow(Janela.cont, new String [] {ipNovaConexao, ""+socket.getPort()});;
-		
+		Janela.modelo.insertRow(Janela.cont, new String[] { ipNovaConexao, "" + socket.getPort() });
 		System.out.println("Conexão " + ipNovaConexao + " adicionada a lista.");
-		
 
 		Conexao conexaoJaExistente = this.isConexao(ipNovaConexao);
 
@@ -63,14 +58,12 @@ public class Controle {
 			this.conexoes.remove(conexaoJaExistente);
 		}
 
-		Conexao novaConexao = new Conexao(socket, this,configuracoes);
+		Conexao novaConexao = new Conexao(socket, this);
 
 		this.conexoes.add(novaConexao);
-		Janela.modelo.addRow(new String [] {novaConexao.getIP(), configuracoes.getPorta()});
+		Janela.modelo.addRow(new String[] { novaConexao.getIP(), configuracoes.getPorta() });
 
 	}
-
-	
 
 	public String getPortaServidor() {
 
@@ -92,7 +85,6 @@ public class Controle {
 		return null;
 	}
 
-	
 	public void verificaRede() {
 
 		String ip = this.localizaRede();
@@ -103,12 +95,13 @@ public class Controle {
 			if (this.configuracoes.getIp().equals(verificaIPs)) {
 				System.out.println("Já existe conexao aberta no ip: " + verificaIPs);
 
-			} else {
+				}
+			 else {
 
 				Conexao conexao = this.isConexao(verificaIPs);
 
 				if (conexao == null) {
-					System.out.println("Meu ip: " + verificaIPs);
+					System.out.println("Ip: " + verificaIPs);
 
 					this.conectaServidor(verificaIPs);
 				}
@@ -123,9 +116,6 @@ public class Controle {
 		System.out.println("IP: " + this.configuracoes.getIp());
 		String ip = this.configuracoes.getIp();
 		String[] vetorIP = ip.split("\\.");
-		
-
-		System.out.println("Endereço de ip base: " + vetorIP[0] + "." + vetorIP[1] + "." + vetorIP[2] + ".");
 
 		return vetorIP[0] + "." + vetorIP[1] + "." + vetorIP[2] + ".";
 	}
@@ -138,21 +128,14 @@ public class Controle {
 		this.conexoes = conexoes;
 	}
 
-	public boolean verficaConexao() {
+	public void verficaConexao() {
 
-		if (this.conexoes.size() > 1) {
-			return true;
-		}
-
-		return false;
+		System.out.println(conexoes.size());
 	}
-
-	
 
 	public void enviaMensagemControle(String sep) {
 		this.cliente.enviaMessagem(sep);
 	}
-
 
 	public Configuracoes getConfiguracoesControle() {
 		return this.configuracoes;

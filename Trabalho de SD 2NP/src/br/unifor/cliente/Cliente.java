@@ -17,7 +17,6 @@ import br.unifor.controle.Controle;
 import br.unifor.swing.Janela;
 
 public class Cliente {
-	private final String SEPARADOR = "";
 
 	private static Controle controle;
 	private static Configuracoes configuracoes;

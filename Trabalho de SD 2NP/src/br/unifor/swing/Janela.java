@@ -31,6 +31,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import br.unifor.Messagens.Conexao;
 import br.unifor.configurações.Configuracoes;
 import br.unifor.controle.Controle;
 
@@ -206,31 +207,28 @@ public class Janela extends JFrame {
 					System.out.println("Separador: " + SEPARADOR);
 					txtArea.append("\n Separador: " + SEPARADOR + "\n");
 
-					if (controle.verficaConexao()) {
-						System.out.println("VÁRIAS conexões");
 
 						controle.enviaMensagemControle(SEPARADOR);
+		
+//						
+//						somaCpu+=Integer.parseInt(cpuLocal);
+//						somaMemoria+=Integer.parseInt(memoriaLocal);
+//						somaBloqueio+=Integer.parseInt(bloqueioLocal);
+//							
+//						controle.getConfiguracoesControle().setCpu(""+somaCpu);
+//						controle.getConfiguracoesControle().setMemoria(""+somaMemoria	);
+//						controle.getConfiguracoesControle().setBloqueio(""+somaBloqueio);
+//
+//						txtArea.append("\n Cpu Local: " + cpuLocal + "\n");
+//						txtArea.append("\n Memória Local: " + memoriaLocal + "\n");
+//						txtArea.append("\n Bloqueio Local: " + bloqueioLocal + "\n");
+//
+//						sistExibeCPU.setText(""+somaCpu);
+//						sistExibeMemoria.setText(""+somaMemoria);
+//						sistExibeBloqueio.setText(""+somaBloqueio);
+//						repaint();
 
-					} else {
 						
-						somaCpu+=Integer.parseInt(cpuLocal);
-						somaMemoria+=Integer.parseInt(memoriaLocal);
-						somaBloqueio+=Integer.parseInt(bloqueioLocal);
-							
-						controle.getConfiguracoesControle().setCpu(""+somaCpu);
-						controle.getConfiguracoesControle().setMemoria(""+somaMemoria	);
-						controle.getConfiguracoesControle().setBloqueio(""+somaBloqueio);
-
-						txtArea.append("\n Cpu Local: " + cpuLocal + "\n");
-						txtArea.append("\n Memória Local: " + memoriaLocal + "\n");
-						txtArea.append("\n Bloqueio Local: " + bloqueioLocal + "\n");
-
-						sistExibeCPU.setText(""+somaCpu);
-						sistExibeMemoria.setText(""+somaMemoria);
-						sistExibeBloqueio.setText(""+somaBloqueio);
-						repaint();
-
-						}
 					}
 
 					localExibeCPU.setText("");

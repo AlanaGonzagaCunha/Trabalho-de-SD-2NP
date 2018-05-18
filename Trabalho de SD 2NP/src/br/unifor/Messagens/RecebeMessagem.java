@@ -13,13 +13,9 @@ import br.unifor.controle.Controle;
 public class RecebeMessagem implements Runnable {
 
 	private Conexao conexao;
-	private JTextField sistExibeCPU;
-	private JTextField sistExibeMemoria;
-	private JTextField sistExibeBloqueio;
-	JFrame janela;
+	
 
 	public RecebeMessagem(Conexao conexao) {
-		sistExibeCPU = new JTextField();
 		this.conexao = conexao;
 		
 	}

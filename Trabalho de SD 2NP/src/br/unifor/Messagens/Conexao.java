@@ -14,20 +14,14 @@ import br.unifor.swing.Janela;
 public class Conexao {
 	private Controle controle;
 	private Socket conexao;
-	private String nomeConexao;
 	private Thread recebeMensagens;
-	private Configuracoes configuracoes;
-	private boolean ativa;
-	static int cont=0;
 
 	int somaCpu, somaMemoria, somaBloqueio;
 
-	public Conexao(Socket conexao, Controle controle, Configuracoes c) {
+	public Conexao(Socket conexao, Controle controle) {
 
 		this.conexao = conexao;
 		this.controle = controle;
-		this.configuracoes = c;
-		ativa = true;
 
 		this.escutaMensagem();
 	}
@@ -38,20 +32,10 @@ public class Conexao {
 		this.recebeMensagens.start();
 	}
 
-	boolean conexQtd = false;
-
-	public boolean isAtiva() {
-		return ativa;
-	}
-
-	public void setAtiva(boolean ativa) {
-		this.ativa = ativa;
-	}
 
 	public void enviaMensagemConexao(String mensagem) {
 
 		try {
-			cont++;
 			System.out
 					.println("\n Enviando mensagem para " + this.getConexao().getInetAddress().getHostAddress() + "\n");
 			Janela.txtArea
@@ -59,6 +43,7 @@ public class Conexao {
 
 			PrintStream saida;
 			saida = new PrintStream(this.getConexao().getOutputStream());
+
 			System.out.println("Messagem recebida: " + mensagem + "\n");
 			Janela.txtArea.append("Messagem recebida: " + mensagem + "\n");
 			saida.println(mensagem);
@@ -124,14 +109,6 @@ public class Conexao {
 		this.conexao = conexao;
 	}
 
-	public String getNomeConexao() {
-		return nomeConexao;
-	}
-
-	public void setNomeConexao(String nomeConexao) {
-		this.nomeConexao = nomeConexao;
-	}
-
 	public Thread getRecebeMensagens() {
 		return recebeMensagens;
 	}
@@ -140,12 +117,5 @@ public class Conexao {
 		this.recebeMensagens = recebeMensagens;
 	}
 
-	public Configuracoes getConfiguracoes() {
-		return configuracoes;
-	}
-
-	public void setConfiguracoes(Configuracoes configuracoes) {
-		this.configuracoes = configuracoes;
-	}
 
 }

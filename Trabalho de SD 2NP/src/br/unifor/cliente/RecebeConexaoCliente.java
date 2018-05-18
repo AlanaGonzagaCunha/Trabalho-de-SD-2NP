@@ -9,9 +9,9 @@ import br.unifor.swing.Janela;
 
 public class RecebeConexaoCliente implements Runnable {
 
-	String ip;
-	int porta;
-	Controle controle;
+	private String ip;
+	private int porta;
+	private Controle controle;
 
 	public RecebeConexaoCliente(String ip, int porta, Controle controle) {
 		this.ip = ip;
@@ -24,14 +24,14 @@ public class RecebeConexaoCliente implements Runnable {
 
 		try {
 			Socket abreConexao = new Socket(this.ip, this.porta);
-			System.out.println("Cliente conectado no servidor!!!");
-			Janela.txtArea.append("Cliente conectado no servidor!!! \n");
+			System.out.println("Cliente conectado!!!");
+			Janela.txtArea.append("Cliente conectado!!! \n");
 			
 			this.controle.recebeConexao(abreConexao);
 
 		} catch (IOException e) {
 			System.out
-					.println("Não há servidor conectado neste ip: " + ip);
+					.println("Não há servidor conectado no ip: " + ip);
 		}
 
 	}

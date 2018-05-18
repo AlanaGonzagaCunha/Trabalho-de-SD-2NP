@@ -1,4 +1,4 @@
-package br.unifor.Principal;
+package br.unifor.swing;
 
 import br.unifor.controle.Controle;
 
